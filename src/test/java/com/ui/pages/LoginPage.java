@@ -1,7 +1,12 @@
 package com.ui.pages;
 
+import static org.testng.Assert.assertThrows;
+import static org.testng.Assert.assertTrue;
+
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.testng.Assert;
+import org.testng.Assert.ThrowingRunnable;
 
 import com.ui.utility.LoggerUtility;
 import com.ui.utility.MobileUtility;
@@ -13,7 +18,7 @@ public class LoginPage extends MobileUtility {
 	public LoginPage() {
 		super();
 	}
-	
+
 	private Logger logger = LoggerUtility.getLogger(this.getClass());
 
 	private static final By NEXT_BUTTON_LOCATOR = AppiumBy.accessibilityId("Next");
@@ -25,6 +30,12 @@ public class LoginPage extends MobileUtility {
 	private static final By ENTER_OTP_TEXTBOX_LOCATOR = AppiumBy.className("android.widget.EditText");
 	private static final By CONTINUE_BUTTON_LOCATOR = AppiumBy
 			.xpath("//android.widget.Button[@content-desc=\"Continue\"]");
+	
+	// login validation locator
+//	private static final By HELP_FAQ_TEXT_LOCATOR = AppiumBy
+//			.xpath("//android.view.View[@content-desc=\"Help & FAQs\"]");
+	
+	private static final By LOGIN_SUCCESS_TEXT_LOCATOR = AppiumBy.xpath("//android.view.View[@content-desc='OTP Verified Successfully!']");
 
 	public LoginPage goTologinPage() {
 		logger.info("Navigate to Login Page");
@@ -34,7 +45,7 @@ public class LoginPage extends MobileUtility {
 	}
 
 	public LoginPage enterMobileNo(String number) {
-		logger.info("Entering Mobile No: "+ number);
+		logger.info("Entering Mobile No: " + number);
 		clickOn(MOBILE_NO_TEXT_LOCATOR);
 		enterText(MOBILE_NO_TEXT_LOCATOR, number);
 		return this;
@@ -47,7 +58,7 @@ public class LoginPage extends MobileUtility {
 	}
 
 	public LoginPage enterOTP(String otp) {
-		logger.info("Entering OTP "+ otp);
+		logger.info("Entering OTP " + otp);
 		enterText(ENTER_OTP_TEXTBOX_LOCATOR, otp);
 		return this;
 	}
@@ -55,7 +66,11 @@ public class LoginPage extends MobileUtility {
 	public HomePage clickOnContinue() {
 		logger.info("click on Continue button");
 		clickOn(CONTINUE_BUTTON_LOCATOR);
+		Assert.assertTrue(isElementDisplayed(LOGIN_SUCCESS_TEXT_LOCATOR),
+				"========================== LOGIN FAILED - Dashboard not visible ==========================");
+		logger.info("========================== LOGIN PASSED - Dashboard is Visible ==========================");
 		return new HomePage(getDriver());
+
 	}
 
 }

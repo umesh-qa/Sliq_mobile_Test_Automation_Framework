@@ -28,7 +28,7 @@ public class MutualFond_centeralPage extends MobileUtility {
 
 	public MutualFond_centeralPage enterOtp(String otp) {
 
-		switchToWebView();
+//		switchToWebView();
 
 		wait = new WebDriverWait(getDriver(), Duration.ofSeconds(20));
 

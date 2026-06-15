@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -18,6 +18,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 
@@ -121,7 +122,7 @@ public abstract class MobileUtility {
 		throw new RuntimeException("No WEBVIEW Context Found. Available Contexts : " + getDriver().getContextHandles());
 	}
 
-	protected void waitForWebViewToLoad() {
+	public void waitForWebViewToLoad() {
 
 		logger.info("Waiting for WebView context...");
 
@@ -160,7 +161,7 @@ public abstract class MobileUtility {
 			// Ignore
 		}
 
-		WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+		WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
 
 		element.click();
 		element.clear();
@@ -178,14 +179,64 @@ public abstract class MobileUtility {
 		element.sendKeys(value, Keys.ENTER);
 	}
 
+	public void scrollToText(String text) {
+		wait.until(ExpectedConditions.visibilityOfElementLocated(
+				AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector().scrollable(true))"
+						+ ".scrollIntoView(new UiSelector().text(\"" + text + "\"))")));
+	}
+
+	public void scrollToEnd() {
+		driver.findElement(
+				AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollToEnd(60)"));
+	}
+
 	public WebElement getElement(By locator) {
 
 		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 	}
-	
 
 	public WebElement getElementToBeClickable(By locator) {
 		return wait.until(ExpectedConditions.elementToBeClickable(locator));
+	}
+
+	public void selectFromDropdown(By dropdownLocator, String optionText) {
+
+		clickOn(dropdownLocator);
+
+		By option = AppiumBy.androidUIAutomator("new UiSelector().text(\"" + optionText + "\")");
+
+		clickOn(option);
+	}
+
+	public void javaScriptClick(By locator) {
+
+		WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+
+		js.executeScript("arguments[0].scrollIntoView(true);", element);
+
+		js.executeScript("arguments[0].click();", element);
+	}
+
+	public String getVisibleText(By locator) {
+
+		WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+
+		return element.getAttribute("content-desc");
+
+	}
+
+	public boolean isElementDisplayed(By locator) {
+
+		try {
+
+			wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+
 	}
 
 	// =============================

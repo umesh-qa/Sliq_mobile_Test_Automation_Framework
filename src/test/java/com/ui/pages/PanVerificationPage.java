@@ -2,6 +2,7 @@ package com.ui.pages;
 
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 
 import com.ui.utility.LoggerUtility;
 import com.ui.utility.MobileUtility;
@@ -32,6 +33,9 @@ public class PanVerificationPage extends MobileUtility {
 
 	private static final By CONTINUE_BUTTON_LOCATOR = AppiumBy
 			.xpath("//android.widget.Button[@content-desc=\"Check Loan Eligibility\"]");
+
+	// validation locator
+	private static final By PAN_VERIFICATION_TEXT_LOCATOR = AppiumBy.xpath("//android.view.View[@content-desc='PAN Verified successfully']");
 
 	public PanVerificationPage enterPanNo(String panNumber) {
 		logger.info("Entering Pan number: " + panNumber);
@@ -64,13 +68,20 @@ public class PanVerificationPage extends MobileUtility {
 		return this;
 	}
 
-		public MutualFond_centeralPage clickOnCheckLoanEligibility() {
+	public MutualFond_centeralPage clickOnCheckLoanEligibility() {
 
-		    logger.info("Checking Loan Eligibility");
-		    clickOn(CONTINUE_BUTTON_LOCATOR);
-		    switchToWebView();
+		logger.info("Checking Loan Eligibility");
+		clickOn(CONTINUE_BUTTON_LOCATOR);
 
-		    return new MutualFond_centeralPage(getDriver());
-		}
-	
+		
+
+		Assert.assertTrue(isElementDisplayed(PAN_VERIFICATION_TEXT_LOCATOR),
+				"============================ PAN VALIDATION FAILED: Mutual Found Centeral Page not Visible ============================");
+
+		logger.info(
+				"============================ PAN VALIDATION PASSED: Mutual Found Centeral Page is Visible ============================");
+		switchToWebView();
+		return new MutualFond_centeralPage(getDriver());
+	}
+
 }

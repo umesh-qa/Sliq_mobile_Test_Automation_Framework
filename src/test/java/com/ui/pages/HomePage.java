@@ -2,6 +2,7 @@ package com.ui.pages;
 
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 
 import com.ui.utility.LoggerUtility;
 import com.ui.utility.MobileUtility;
@@ -26,6 +27,8 @@ public class HomePage extends MobileUtility {
 //		clickOn(APPLY_NOW_BUTTON_LOCATOR);
 		clickOn(MUTUAL_FOUND_OPTION_LOCATOR);
 		clickOn(CONTINUE_AND_CONFIRM_LOCATOR);
+		
+		
 		return new PanVerificationPage(getDriver());
 	}
 

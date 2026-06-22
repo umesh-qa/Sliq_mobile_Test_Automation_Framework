@@ -6,44 +6,50 @@ import org.testng.ITestResult;
 
 import com.aventstack.extentreports.Status;
 import com.ui.test.BaseTest;
-import com.ui.utility.ExtentReport;
+import com.ui.utility.ExtentReportUtility;
 import com.ui.utility.MobileUtility;
 
 public class MyTestListners implements ITestListener {
 
 	public void onStart(ITestContext context) {
-		ExtentReport.setUpSparkReprort("report.html");
+		ExtentReportUtility.setUpSparkReprort("reports.html");
 
 	}
 
 	public void onTestStart(ITestResult result) {
-		ExtentReport.creatExtentTest(result.getMethod().getMethodName());
+		System.out.println("On test metodod started ");
+		ExtentReportUtility.creatExtentTest(result.getMethod().getMethodName());
+		System.out.println("Extent is created");
+
 	}
 
 	public void onTestSuccess(ITestResult result) {
-		ExtentReport.getExtentTest().log(Status.PASS, result.getMethod().getMethodName());
+		ExtentReportUtility.getExtentTest().log(Status.PASS, result.getMethod().getMethodName());
 
 	}
 
 	public void onTestFailure(ITestResult result) {
-		ExtentReport.getExtentTest().log(Status.FAIL, result.getMethod().getMethodName());
-		ExtentReport.getExtentTest().log(Status.FAIL, result.getThrowable().getMessage());
 
-		Object object = result.getInstance();
-		MobileUtility mobileUtility = ((BaseTest) object).getInstance();
+//		if (ExtentReportUtility.getExtentTest() != null) {
 
-		String screenShotPath = mobileUtility.getScreenshotPath(result.getMethod().getMethodName());
-		ExtentReport.getExtentTest().addScreenCaptureFromPath(screenShotPath);
+			Object object = result.getInstance();
+			MobileUtility mobileUtility = ((BaseTest) object).getInstance();
+
+			String screenShotPath = mobileUtility.getScreenshotPath(result.getMethod().getMethodName());
+			ExtentReportUtility.getExtentTest().addScreenCaptureFromPath(screenShotPath);
+
+			ExtentReportUtility.getExtentTest().log(Status.FAIL, result.getMethod().getMethodName());
+//		} 
 
 	}
 
 	public void onTestSkipped(ITestResult result) {
-		ExtentReport.getExtentTest().log(Status.SKIP, result.getMethod().getMethodName());
+		ExtentReportUtility.getExtentTest().log(Status.SKIP, result.getMethod().getMethodName());
 
 	}
 
 	public void onFinish(ITestContext context) {
-		ExtentReport.flushReport();
+		ExtentReportUtility.flushReport();
 	}
 
 }

@@ -2,10 +2,12 @@ package com.ui.test;
 
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 
 import com.ui.pages.LoginPage;
 import com.ui.utility.MobileUtility;
 
+@Listeners(com.ui.listeners.MyTestListners.class)
 public abstract class BaseTest {
 	
 	protected LoginPage homePage;

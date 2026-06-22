@@ -50,21 +50,25 @@ public class BFLKycVerificationPage extends MobileUtility {
 	private static final By CHECKBOX2_LOCATOR = AppiumBy
 			.xpath("//android.widget.TextView[@text=\"I accept Valuenable's\"]");
 	private static final By SUMBIT_BUTTON_LOCATOR = AppiumBy.xpath("//android.widget.Button[@text='Submit']");
-	
+
+//	private static final By SUMBIT_BUTTON_LOCATOR = AppiumBy.androidUIAutomator(
+//			"new UiScrollable(new UiSelector().scrollable(true))" + ".scrollIntoView(new UiSelector().text('Submit'))");
 
 	// ---------------------- ALERT BOX -------------------------------------//
 	private static final By ALERT_POLITICAL_RADIO_BUTTON_LOCATOR = By.xpath("//android.widget.RadioButton[@text='No']");
 
-	private static final By ALERT_CHECKBOX1_LOCATOR = By.xpath(
-			"//android.widget.CheckBox[@text=\" I have read, understood, and hereby accept the Product terms and conditions & Privacy Policy of Bajaj Finance Limited*\"]");
+	private static final By ALERT_CHECKBOX1_LOCATOR = By
+			.xpath("//span[contains(text(),'I have read, understood, and hereby accept the')]");
 
-	private static final By ALERT_CHECKBOX2_LOCATOR = By.xpath(
-			"//android.widget.CheckBox[@text=\" I authorize BFL to receive my credit information from TU CIBIL (LAMF) and agree to the Terms and Conditions of TU CIBIL. (Mandatory).\"]");
+	private static final By ALERT_CHECKBOX2_LOCATOR = By.xpath("//span[contains(text(),'I authorize BFL to receive')]");
+	// span[contains(text(),'I hereby expressly authorize Bajaj Finance Limited')]
+	private static final By ALERT_CHECKBOX3_LOCATOR = By
+			.xpath("//span[contains(text(),'I hereby expressly authorize Bajaj Finance Limited')]");
 
-	private static final By ALERT_CHECKBOX3_LOCATOR = By.xpath(
-			"//android.widget.CheckBox[@text=\" I hereby expressly authorize Bajaj Finance Limited and their representative to send promotional communication about all products/services rendered by Bajaj Finance limited through phone calls/SMSs/emails/WhatsApp or any other electronic mode (Optional)\"]");
+	private static final By ALERT_OK_BUTTON_LOCATOR = By.xpath("//button[@type='button' and contains(text(),'Ok')]");
 
-	private static final By ALERT_OK_BUTTON_LOCATOR = By.xpath("//android.widget.Button[@text='Ok']");
+	// alert page element with scrolllocator
+	private static final By ALERT_DD_SCROLL_LOCATOR = By.xpath("//input[@value='no']");
 
 	// --------------------------------------------------------------------------------//
 	public BFLKycVerificationPage VerifyEmail() {
@@ -120,20 +124,27 @@ public class BFLKycVerificationPage extends MobileUtility {
 //		selectFromDropdown(FINANCIALL_DEPARTMENT_DD_LOCATOR, financialDepartment);
 		clickOn(CHECKBOX1_LOCATOR);
 		clickOn(CHECKBOX2_LOCATOR);
-//		scrollToEnd();
-		javaScriptClick(SUMBIT_BUTTON_LOCATOR);
+		scrollToEnd(SUMBIT_BUTTON_LOCATOR);
+		clickOn(SUMBIT_BUTTON_LOCATOR);
+//		javaScriptClick(SUMBIT_BUTTON_LOCATOR);
 
 		return this;
 	}
 
 	// Alert Page Action
-	public BFLKycVerificationPage acceptTermsConditions() {
-		scrollToEnd();
-		clickOn(ALERT_POLITICAL_RADIO_BUTTON_LOCATOR);
-		clickOn(ALERT_CHECKBOX1_LOCATOR);
-		clickOn(ALERT_CHECKBOX2_LOCATOR);
-		clickOn(ALERT_CHECKBOX3_LOCATOR);
-		clickOn(ALERT_OK_BUTTON_LOCATOR);
-		return this;
+	public PledgeFoundPage acceptTermsConditions() {
+//		scrollToEnd();
+		switchToWebView();
+		scrollToEnd(ALERT_DD_SCROLL_LOCATOR);
+		clickOn(ALERT_DD_SCROLL_LOCATOR);
+		scrollToEnd(ALERT_CHECKBOX1_LOCATOR);
+		javaScriptClick(ALERT_CHECKBOX1_LOCATOR);
+		scrollToEnd(ALERT_CHECKBOX2_LOCATOR);
+		javaScriptClick(ALERT_CHECKBOX2_LOCATOR);
+		scrollToEnd(ALERT_CHECKBOX3_LOCATOR);
+		javaScriptClick(ALERT_CHECKBOX3_LOCATOR);
+		scrollToEnd(ALERT_OK_BUTTON_LOCATOR);
+		javaScriptClick(ALERT_OK_BUTTON_LOCATOR);
+		return new PledgeFoundPage(getDriver());
 	}
 }

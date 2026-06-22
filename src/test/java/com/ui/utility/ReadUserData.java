@@ -24,10 +24,12 @@ public class ReadUserData {
 			properties = new Properties();
 			reader = new FileReader(file);
 			properties.load(reader);
-			listOfUserdata= new ArrayList<Object[]>();
+			listOfUserdata = new ArrayList<Object[]>();
 			userData = new UserData(properties.getProperty("MOBILENO"), properties.getProperty("OTP"),
 					properties.getProperty("PANNO"), properties.getProperty("PANNAME"),
-					properties.getProperty("EMAILID"), properties.getProperty("DOB"));
+					properties.getProperty("EMAILID"), properties.getProperty("DOB"),
+					properties.getProperty("LOANAMOUNT"), properties.getProperty("DPID"),
+					properties.getProperty("CLIENTID"));
 			listOfUserdata.add(new Object[] { userData });
 			return listOfUserdata.iterator();
 

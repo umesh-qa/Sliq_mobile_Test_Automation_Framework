@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
@@ -17,6 +18,8 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.ui.constants.Shares;
 
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
@@ -151,6 +154,13 @@ public abstract class MobileUtility {
 		element.click();
 	}
 
+	public void clickOnWithoutHideKeyboard(By locator) {
+
+		logger.info("Waiting for element : " + locator);
+		WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
+		element.click();
+	}
+
 	public void enterText(By locator, String value) {
 
 		logger.info("Entering text : " + value);
@@ -185,9 +195,48 @@ public abstract class MobileUtility {
 						+ ".scrollIntoView(new UiSelector().text(\"" + text + "\"))")));
 	}
 
-	public void scrollToEnd() {
+	public void scrollToEnd(By locator) {
+		boolean canScrollMore = true;
+
+		while (canScrollMore) {
+			canScrollMore = (Boolean) ((JavascriptExecutor) driver).executeScript("mobile: scrollGesture",
+					Map.of("left", 100, "top", 100, "width", 800, "height", 1200, "direction", "down", "percent", 50 ));
+//			((JavascriptExecutor) driver).executeScript("mobile: scrollGesture",
+//					Map.of("left", 100, "top", 100, "width", 800, "height", 1200, "direction", "down", "percent", 4.0));
+			canScrollMore = false;
+
+		}
+	}
+
+	public void scrollforAlertPage() {
+//		boolean canScrollMore = true;
+//
+//		while (canScrollMore) {
+//			canScrollMore = (Boolean) ((JavascriptExecutor) driver).executeScript("mobile: scrollGesture",
+//					Map.of("left", 100, "top", 100, "width", 800, "height", 1200, "direction", "down", "percent", 20));
+//			canScrollMore = false;
+//
+//		}
 		driver.findElement(
-				AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollToEnd(60)"));
+				AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollToEnd()"));
+	}
+
+	public void scrollUntilVisible(By locator) {
+		int maxScroll = 15;
+
+		while (!isElementDisplayed(locator) && maxScroll > 0) {
+			((JavascriptExecutor) driver).executeScript("mobile: scrollGesture",
+					Map.of("left", 100, "top", 200, "width", 800, "height", 1200, "direction", "down", "percent", 1.0));
+			maxScroll--;
+
+		}
+		driver.findElement(
+				AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollToEnd()"));
+	}
+
+	public void scrollAndClick(By locator) {
+		scrollUntilVisible(locator);
+		javaScriptClick(locator);
 	}
 
 	public WebElement getElement(By locator) {
@@ -210,13 +259,19 @@ public abstract class MobileUtility {
 
 	public void javaScriptClick(By locator) {
 
-		WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+		WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(locator));
 
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 
 		js.executeScript("arguments[0].scrollIntoView(true);", element);
 
 		js.executeScript("arguments[0].click();", element);
+	}
+
+	public void javaScriptScroll() {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollTo(0,document.body.scrollHeight)");
+
 	}
 
 	public String getVisibleText(By locator) {
@@ -231,7 +286,7 @@ public abstract class MobileUtility {
 
 		try {
 
-			wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+			wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 			return true;
 		} catch (Exception e) {
 			return false;

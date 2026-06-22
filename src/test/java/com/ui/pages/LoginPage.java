@@ -1,12 +1,8 @@
 package com.ui.pages;
 
-import static org.testng.Assert.assertThrows;
-import static org.testng.Assert.assertTrue;
-
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.testng.Assert;
-import org.testng.Assert.ThrowingRunnable;
 
 import com.ui.utility.LoggerUtility;
 import com.ui.utility.MobileUtility;

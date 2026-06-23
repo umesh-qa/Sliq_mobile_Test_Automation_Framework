@@ -19,8 +19,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.ui.constants.Shares;
-
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
@@ -43,19 +41,14 @@ public abstract class MobileUtility {
 		options.setAppActivity(ReadConfiguration.getConfig("ACTIVITY"));
 		options.setDeviceName(ReadConfiguration.getConfig("DEVICE"));
 		options.setUdid(ReadConfiguration.getConfig("UDID"));
-//		options.setCapability("uiautomator2ServerLaunchTimeout", 60000);
-//		options.setCapability("newCommandTimeout", 300);
-//		options.setCapability("adbExecTimeout", 120000);
 		options.setNoReset(true);
-		options.setCapability("appium:chromedriverExecutable",
-				"C:\\Users\\umesh.k\\Downloads\\chromedriver-win64 (1)\\chromedriver-win64\\chromedriver.exe");
+		options.setCapability("appium:chromedriverExecutable", System.getProperty("user.dir") + File.separator
+				+ "Configuration" + File.separator + "chromedriver.exe");
 
 		// WebView Capabilities
 		options.setCapability("appium:autoWebview", false);
 		options.setCapability("appium:ensureWebviewsHavePages", true);
 		options.setCapability("appium:chromedriverAutodownload", true);
-//		options.setCapability("appium:ensureWebviewsHavePages", true);
-//		options.setCapability("appium:chromedriverAutodownload", true);
 
 		try {
 
@@ -79,6 +72,13 @@ public abstract class MobileUtility {
 
 	public AndroidDriver getDriver() {
 		return driver;
+	}
+	
+	public Object getAPKVersion() {
+		return getDriver().getCapabilities().getCapability("platformVersion");
+	}
+	public Object getDeviceInfo() {
+		return getDriver().getCapabilities().getCapability("deviceName");
 	}
 
 	// =============================
@@ -200,23 +200,13 @@ public abstract class MobileUtility {
 
 		while (canScrollMore) {
 			canScrollMore = (Boolean) ((JavascriptExecutor) driver).executeScript("mobile: scrollGesture",
-					Map.of("left", 100, "top", 100, "width", 800, "height", 1200, "direction", "down", "percent", 50 ));
-//			((JavascriptExecutor) driver).executeScript("mobile: scrollGesture",
-//					Map.of("left", 100, "top", 100, "width", 800, "height", 1200, "direction", "down", "percent", 4.0));
+					Map.of("left", 100, "top", 100, "width", 800, "height", 1200, "direction", "down", "percent", 50));
 			canScrollMore = false;
 
 		}
 	}
 
 	public void scrollforAlertPage() {
-//		boolean canScrollMore = true;
-//
-//		while (canScrollMore) {
-//			canScrollMore = (Boolean) ((JavascriptExecutor) driver).executeScript("mobile: scrollGesture",
-//					Map.of("left", 100, "top", 100, "width", 800, "height", 1200, "direction", "down", "percent", 20));
-//			canScrollMore = false;
-//
-//		}
 		driver.findElement(
 				AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollToEnd()"));
 	}
@@ -312,7 +302,6 @@ public abstract class MobileUtility {
 		try {
 			Thread.sleep(4000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		getDriver().context("NATIVE_APP");

@@ -2,14 +2,12 @@ package com.ui.test;
 
 import org.testng.annotations.Test;
 
-import com.ui.pages.BFLKycVerificationPage;
-import com.ui.pages.PledgeFoundPage;
 import com.ui.pojo.MutualFoundUserData;
 
 public class MutualFound extends BaseTest {
 
 	@Test(description = "Verify user able to Apply and complete Mutula Found Journy for Loan. J", dataProviderClass = com.ui.dataprovider.MutualFoundUserDataProvider.class, dataProvider = "MutualFoundUser")
-	public void MutualFoundLoginCheck(MutualFoundUserData data) {
+	public void MutualFoundHappyJourny(MutualFoundUserData data) {
 
 // =============== Login Page Validation =====================//
 

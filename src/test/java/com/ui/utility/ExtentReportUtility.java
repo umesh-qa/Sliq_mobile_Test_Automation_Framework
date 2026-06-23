@@ -1,12 +1,14 @@
 package com.ui.utility;
 
 import java.io.File;
+import java.sql.Driver;
 
 import org.testng.ITestListener;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import com.ui.test.BaseTest;
 
 public class ExtentReportUtility implements ITestListener {
 
@@ -18,7 +20,16 @@ public class ExtentReportUtility implements ITestListener {
 		ExtentSparkReporter extentSparkReport = new ExtentSparkReporter(
 				System.getProperty("user.dir") + File.separator + "Reports" + File.separator + reportName);
 		extentReport = new ExtentReports();
+//		Object object = new Object();
+//		MobileUtility mobileUtility=((BaseTest) object).getInstance();
 		extentReport.attachReporter(extentSparkReport);
+		extentReport.setSystemInfo("Platform", "Android ");
+		extentReport.setSystemInfo("Device", "POCO");
+		extentReport.setSystemInfo("os", "Android 15");
+		extentReport.setSystemInfo("APK Version","APK_DEV");
+		extentReport.setSystemInfo("Environment", "DEV");
+		
+
 
 	}
 

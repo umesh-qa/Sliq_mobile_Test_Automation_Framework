@@ -27,9 +27,15 @@ public class HomePage extends MobileUtility {
 
 	public PanVerificationPage navigateToMutualFound() {
 		logger.info("Navigate To Mutula Fond ");
-//		clickOn(APPLY_NOW_BUTTON_LOCATOR);
-		clickOn(MUTUAL_FOUND_OPTION_LOCATOR);
-		clickOn(CONTINUE_AND_CONFIRM_LOCATOR);
+		try {
+		clickOn(APPLY_NOW_BUTTON_LOCATOR);
+		}catch(Exception e) {
+			logger.info("Appy button not appear");
+		}
+		finally {
+			clickOn(MUTUAL_FOUND_OPTION_LOCATOR);
+			clickOn(CONTINUE_AND_CONFIRM_LOCATOR);
+		}
 		return new PanVerificationPage(getDriver());
 	}
 

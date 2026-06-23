@@ -10,7 +10,7 @@ public class Shares extends BaseTest {
 
 	@Test(description = "Verify user able to Apply and complete Shares Journy for Loan.", 
 		  dataProviderClass = com.ui.dataprovider.SharesUserDataProvider.class, dataProvider = "SharesUser")
-	public void MutualFoundLoginCheck(SharesUserData data) {
+	public void SharesHappyJourny(SharesUserData data) {
 
 		// =============== Login Page Validation =====================//
 

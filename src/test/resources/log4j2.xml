@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <Configuration>
 
 	<Appenders>
 
+		<!-- Console Appender with clean, compact layout for Eclipse console readability -->
 		<Console name="Console" target="SYSTEM_OUT">
-
 			<PatternLayout
-				pattern="%d{YYYY-MM-dd HH-mm-ss} {%t} %level %logger::%M::%L %msg %n"></PatternLayout>
+				pattern="%d{HH:mm:ss.SSS} [%-5level] [%c{1}:%L] - %msg%n" />
 		</Console>
 
-		<File name="FileLogger" fileName="logs/automation.log" append="false">
+		<!-- File Appender with dynamic date-time prefix to prevent log overwrites -->
+		<File name="FileLogger" fileName="logs/automation_${date:yyyy-MM-dd_HH-mm-ss}.log" append="false">
 			<PatternLayout
-				pattern="%d{YYYY-MM-dd HH-mm-ss} {%t} %level %logger %msg %n"></PatternLayout>
+				pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%c{1}:%L] - %msg%n" />
 		</File>
 
 	</Appenders>
@@ -20,9 +20,8 @@
 	<loggers>
 
 		<Root level="info">
-			<AppenderRef ref="Console"></AppenderRef>
-			<AppenderRef ref="FileLogger"></AppenderRef>
-
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="FileLogger" />
 		</Root>
 
 	</loggers>

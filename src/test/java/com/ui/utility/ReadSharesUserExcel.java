@@ -7,81 +7,82 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.logging.log4j.Logger;
 
 import com.ui.pojo.SharesUserData;
 
+/**
+ * Utility to read Shares user details from test data Excel sheets.
+ */
 public class ReadSharesUserExcel {
 
-	public static Iterator<SharesUserData> readExcelFile(String fileName) {
+	private static final Logger logger = LoggerUtility.getLogger(ReadSharesUserExcel.class);
 
-		File loginDatafile = new File(
+	public static Iterator<SharesUserData> readExcelFile(String fileName) {
+		File loginDataFile = new File(
 				System.getProperty("user.dir") + File.separator + "UserData" + File.separator + fileName);
 
-		XSSFWorkbook workbook = null;
-		XSSFSheet sheet;
-		Iterator<Row> rowIterator;
-		Row row = null;
+		List<SharesUserData> userList = new ArrayList<>();
+		DataFormatter formatter = new DataFormatter();
 
-		String MobileNo, OTP, PanNo, PanName, EmailID, DOB, LoanAmount, DPID, ClientID, SecurityName, SharesName,
-				SharesQTY, Gender, Fathername, MotherName, MartialStatus, AnnualIncome, Occupation, NatureOfBusiness;
-		SharesUserData sharesFoundData;
-		List<SharesUserData> userList = new ArrayList<SharesUserData>();
-		DataFormatter formmater = new DataFormatter();
+		logger.info("Reading Shares user data from Excel file: " + loginDataFile.getAbsolutePath());
 
-		try {
-			workbook = new XSSFWorkbook(loginDatafile);
-			sheet = workbook.getSheet("Shares");
+		try (XSSFWorkbook workbook = new XSSFWorkbook(loginDataFile)) {
+			XSSFSheet sheet = workbook.getSheet("Shares");
+			if (sheet == null) {
+				logger.error("Sheet 'Shares' not found in excel file: " + fileName);
+				return userList.iterator();
+			}
 
-			rowIterator = sheet.iterator();
-			rowIterator.next(); // skipping row 0 because it is header
+			Iterator<Row> rowIterator = sheet.iterator();
+			if (rowIterator.hasNext()) {
+				rowIterator.next(); // skipping header row
+			}
 
 			while (rowIterator.hasNext()) {
-				row = rowIterator.next();
+				Row row = rowIterator.next();
 				if (row == null) {
-					System.out.println("Null Row found");
+					logger.warn("Null row found, skipping.");
 					continue;
 				}
-				MobileNo = formmater.formatCellValue(row.getCell(0));
-				OTP = formmater.formatCellValue(row.getCell(1));
-				PanNo = formmater.formatCellValue(row.getCell(2));
-				PanName = formmater.formatCellValue(row.getCell(3));
-				EmailID = formmater.formatCellValue(row.getCell(4));
-				DOB = formmater.formatCellValue(row.getCell(5));
-				LoanAmount = formmater.formatCellValue(row.getCell(6));
-				DPID = formmater.formatCellValue(row.getCell(7));
-				ClientID = formmater.formatCellValue(row.getCell(8));
-				SecurityName = formmater.formatCellValue(row.getCell(9));
-				SharesName = formmater.formatCellValue(row.getCell(10));
-				SharesQTY = formmater.formatCellValue(row.getCell(11));
-				Gender = formmater.formatCellValue(row.getCell(12));
-				Fathername = formmater.formatCellValue(row.getCell(13));
-				MotherName = formmater.formatCellValue(row.getCell(14));
-				MartialStatus = formmater.formatCellValue(row.getCell(15));
-				AnnualIncome = formmater.formatCellValue(row.getCell(16));
-				Occupation = formmater.formatCellValue(row.getCell(17));
-				NatureOfBusiness = formmater.formatCellValue(row.getCell(18));
 
-				sharesFoundData = new SharesUserData(MobileNo.toString(), OTP.toString(), PanNo.toString(),
-						PanName.toString(), EmailID.toString(), DOB.toString(), LoanAmount.toString(), DPID.toString(),
-						ClientID.toString(), SecurityName.toString(), SharesName.toString(), SharesQTY.toString(),
-						Gender.toString(), Fathername.toString(), MotherName.toString(), MartialStatus.toString(),
-						AnnualIncome.toString(), Occupation.toString(), NatureOfBusiness.toString());
+				String mobileNo = formatter.formatCellValue(row.getCell(0));
+				String otp = formatter.formatCellValue(row.getCell(1));
+				String panNo = formatter.formatCellValue(row.getCell(2));
+				String panName = formatter.formatCellValue(row.getCell(3));
+				String emailID = formatter.formatCellValue(row.getCell(4));
+				String dob = formatter.formatCellValue(row.getCell(5));
+				String loanAmount = formatter.formatCellValue(row.getCell(6));
+				String dpId = formatter.formatCellValue(row.getCell(7));
+				String clientId = formatter.formatCellValue(row.getCell(8));
+				String securityName = formatter.formatCellValue(row.getCell(9));
+				String sharesName = formatter.formatCellValue(row.getCell(10));
+				String sharesQty = formatter.formatCellValue(row.getCell(11));
+				String gender = formatter.formatCellValue(row.getCell(12));
+				String fatherName = formatter.formatCellValue(row.getCell(13));
+				String motherName = formatter.formatCellValue(row.getCell(14));
+				String maritalStatus = formatter.formatCellValue(row.getCell(15));
+				String annualIncome = formatter.formatCellValue(row.getCell(16));
+				String occupation = formatter.formatCellValue(row.getCell(17));
+				String natureOfBusiness = formatter.formatCellValue(row.getCell(18));
+
+				SharesUserData sharesFoundData = new SharesUserData(
+						mobileNo, otp, panNo, panName, emailID, dob, loanAmount, dpId,
+						clientId, securityName, sharesName, sharesQty,
+						gender, fatherName, motherName, maritalStatus,
+						annualIncome, occupation, natureOfBusiness
+				);
 
 				userList.add(sharesFoundData);
-				workbook.close();
 			}
-		} catch (InvalidFormatException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+			logger.info("Successfully loaded " + userList.size() + " Shares user records.");
+		} catch (IOException | InvalidFormatException e) {
+			logger.error("Error reading Shares User Excel file: " + fileName, e);
 		}
 		return userList.iterator();
-
 	}
-
 }

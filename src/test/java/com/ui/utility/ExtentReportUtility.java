@@ -1,50 +1,61 @@
 package com.ui.utility;
 
 import java.io.File;
-import java.sql.Driver;
-
-import org.testng.ITestListener;
-
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-import com.ui.test.BaseTest;
 
-public class ExtentReportUtility implements ITestListener {
+/**
+ * Utility to configure, generate, and manage ExtentReports for test execution feedback.
+ */
+public class ExtentReportUtility {
 
-	static ExtentReports extentReport;
-	static ThreadLocal<ExtentTest> extentTest = new ThreadLocal<ExtentTest>();
+	private static ExtentReports extentReport;
+	private static final ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
 
-	public static void setUpSparkReprort(String reportName) {
-
+	/**
+	 * Configures Spark HTML reporter and attaches system configurations.
+	 * 
+	 * @param reportName name of the output HTML report file
+	 */
+	public static void setUpSparkReport(String reportName) {
 		ExtentSparkReporter extentSparkReport = new ExtentSparkReporter(
 				System.getProperty("user.dir") + File.separator + "Reports" + File.separator + reportName);
-		extentReport = new ExtentReports();
-//		Object object = new Object();
-//		MobileUtility mobileUtility=((BaseTest) object).getInstance();
-		extentReport.attachReporter(extentSparkReport);
-		extentReport.setSystemInfo("Platform", "Android ");
-		extentReport.setSystemInfo("Device", "POCO");
-		extentReport.setSystemInfo("os", "Android 15");
-		extentReport.setSystemInfo("APK Version","APK_DEV");
-		extentReport.setSystemInfo("Environment", "DEV");
 		
-
-
+		extentReport = new ExtentReports();
+		extentReport.attachReporter(extentSparkReport);
+		extentReport.setSystemInfo("Platform", "Android");
+		extentReport.setSystemInfo("Device", "POCO");
+		extentReport.setSystemInfo("OS", "Android 15");
+		extentReport.setSystemInfo("APK Version", "APK_DEV");
+		extentReport.setSystemInfo("Environment", "DEV");
 	}
 
-	public static void creatExtentTest(String testName) {
+	/**
+	 * Creates a new ExtentTest instance for the active thread.
+	 * 
+	 * @param testName name of the test case
+	 */
+	public static void createExtentTest(String testName) {
 		ExtentTest test = extentReport.createTest(testName);
 		extentTest.set(test);
 	}
 
+	/**
+	 * Gets the current thread's ExtentTest instance.
+	 * 
+	 * @return active ExtentTest
+	 */
 	public static ExtentTest getExtentTest() {
 		return extentTest.get();
 	}
 
+	/**
+	 * Flushes the report content to the output HTML file.
+	 */
 	public static void flushReport() {
-		extentReport.flush();
-
+		if (extentReport != null) {
+			extentReport.flush();
+		}
 	}
-
 }

@@ -35,7 +35,7 @@
 <a href="#"><span class="badge badge-primary"></span></a>
 </li>
 <li class="m-r-10">
-<a href="#"><span class="badge badge-primary">Jun 23, 2026 01:11:04 pm</span></a>
+<a href="#"><span class="badge badge-primary">Jun 27, 2026 03:36:21 pm</span></a>
 </li>
 </ul>
 </div>
@@ -84,9 +84,9 @@
           tag=""
           device="">
           <div class="test-detail">
-            <p class="name">MutualFoundHappyJourny</p>
+            <p class="name">mutualFundHappyJourney</p>
             <p class="text-sm">
-              <span>1:11:11 pm</span> / <span>00:01:43:176</span>
+              <span>3:36:28 pm</span> / <span>00:01:27:097</span>
               <span class="badge fail-bg log float-right">Fail</span>
             </p>
           </div>
@@ -94,10 +94,10 @@
 <div class="detail-head">
 <div class="p-v-10">
 <div class="info">
-<h5 class="test-status text-fail">MutualFoundHappyJourny</h5>
-<span class='badge badge-success'>06.23.2026 1:11:11 pm</span>
-<span class='badge badge-danger'>06.23.2026 1:12:54 pm</span>
-<span class='badge badge-default'>00:01:43:176</span>
+<h5 class="test-status text-fail">mutualFundHappyJourney</h5>
+<span class='badge badge-success'>06.27.2026 3:36:28 pm</span>
+<span class='badge badge-danger'>06.27.2026 3:37:55 pm</span>
+<span class='badge badge-default'>00:01:27:097</span>
 &middot; <span class='uri-anchor badge badge-default'>#test-id=1</span>
 <span title='Skip to the next failed step' class='badge badge-danger pointer float-right ne ml-1'><i class="fa fa-fast-forward"></i></span>
 <span title='Collapse all nodes' class='badge badge-default pointer float-right ct ml-1'><i class="fa fa-compress"></i></span>
@@ -107,7 +107,7 @@
 </div>    <div class="row mb-3"><div class="col-md-3">
     
 
-<img data-featherlight='C:\Users\umesh.k\eclipse-workspace\valuenable\SLIQ_Mobile_Automation_Framework\Screenshots\MutualFoundHappyJourny.png' src="C:\Users\umesh.k\eclipse-workspace\valuenable\SLIQ_Mobile_Automation_Framework\Screenshots\MutualFoundHappyJourny.png">
+<img data-featherlight='C:\Users\umesh.k\eclipse-workspace\valuenable\SLIQ_Mobile_Automation_Framework\Screenshots\mutualFundHappyJourney.png' src="C:\Users\umesh.k\eclipse-workspace\valuenable\SLIQ_Mobile_Automation_Framework\Screenshots\mutualFundHappyJourney.png">
   
     <div class="title">Failure Screenshot</div>
 
@@ -118,35 +118,33 @@
   <tbody>
       <tr class="event-row">
         <td><span class="badge log info-bg">Info</span></td>
-        <td>1:11:11 pm</td>
+        <td>3:36:28 pm</td>
         <td>
           Test Execution Started
         </td>
       </tr>
       <tr class="event-row">
         <td><span class="badge log fail-bg">Fail</span></td>
-        <td>1:12:53 pm</td>
+        <td>3:37:55 pm</td>
         <td>
-          MutualFoundHappyJourny
+          mutualFundHappyJourney
         </td>
       </tr>
       <tr class="event-row">
         <td><span class="badge log info-bg">Info</span></td>
-        <td>1:12:53 pm</td>
+        <td>3:37:55 pm</td>
         <td>
-          Verify user able to Apply and complete Mutula Found Journy for Loan. J
+          Verify user is able to apply and complete Mutual Fund Journey for Loan.
         </td>
       </tr>
       <tr class="event-row">
         <td><span class="badge log fail-bg">Fail</span></td>
-        <td>1:12:53 pm</td>
+        <td>3:37:55 pm</td>
         <td>
-          <textarea readonly class="code-block">java.lang.AssertionError: ============================ LENDER SELECTED SUCCESSFULLY ============================ expected [true] but found [false]
-	at org.testng.Assert.fail(Assert.java:111)
-	at org.testng.Assert.failNotEquals(Assert.java:1578)
-	at org.testng.Assert.assertTrue(Assert.java:57)
-	at com.ui.pages.LenderSelectionPage.continueWithBajaj(LenderSelectionPage.java:59)
-	at com.ui.test.MutualFound.MutualFoundHappyJourny(MutualFound.java:40)
+          <textarea readonly class="code-block">java.lang.RuntimeException: OTP not received within 30 seconds
+	at com.ui.utility.OTPUtility.waitForOtp(OTPUtility.java:73)
+	at com.ui.pages.BFLKycVerificationPage.enterOtp(BFLKycVerificationPage.java:87)
+	at com.ui.test.smoke.MutualFund.mutualFundHappyJourney(MutualFund.java:48)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
@@ -170,126 +168,9 @@
 	at org.testng.TestNG.runSuitesLocally(TestNG.java:1208)
 	at org.testng.TestNG.runSuites(TestNG.java:1112)
 	at org.testng.TestNG.run(TestNG.java:1079)
-	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:308)
-	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:71)
-	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:113)
-	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
-	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
-	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
-	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
-</textarea>
-          
-        </td>
-      </tr>
-  </tbody>
-</table>
-</div>
-          </div>
-        </li>
-        <li class="test-item"  status="fail" test-id="2"
-          author=""
-          tag=""
-          device="">
-          <div class="test-detail">
-            <p class="name">SharesHappyJourny</p>
-            <p class="text-sm">
-              <span>1:12:59 pm</span> / <span>00:00:21:227</span>
-              <span class="badge fail-bg log float-right">Fail</span>
-            </p>
-          </div>
-          <div class="test-contents d-none">
-<div class="detail-head">
-<div class="p-v-10">
-<div class="info">
-<h5 class="test-status text-fail">SharesHappyJourny</h5>
-<span class='badge badge-success'>06.23.2026 1:12:59 pm</span>
-<span class='badge badge-danger'>06.23.2026 1:13:20 pm</span>
-<span class='badge badge-default'>00:00:21:227</span>
-&middot; <span class='uri-anchor badge badge-default'>#test-id=2</span>
-<span title='Skip to the next failed step' class='badge badge-danger pointer float-right ne ml-1'><i class="fa fa-fast-forward"></i></span>
-<span title='Collapse all nodes' class='badge badge-default pointer float-right ct ml-1'><i class="fa fa-compress"></i></span>
-<span title='Expand all nodes' class='badge badge-default pointer float-right et'><i class="fa fa-expand"></i></span>
-</div>
-</div>
-</div>    <div class="row mb-3"><div class="col-md-3">
-    
-
-<img data-featherlight='C:\Users\umesh.k\eclipse-workspace\valuenable\SLIQ_Mobile_Automation_Framework\Screenshots\SharesHappyJourny.png' src="C:\Users\umesh.k\eclipse-workspace\valuenable\SLIQ_Mobile_Automation_Framework\Screenshots\SharesHappyJourny.png">
-  
-    <div class="title">Failure Screenshot</div>
-
-    </div></div>
-<div class="detail-body mt-4">
-<table class="table table-sm">
-  <thead><tr><th class="status-col">Status</th><th class="timestamp-col">Timestamp</th><th class="details-col">Details</th></tr></thead>
-  <tbody>
-      <tr class="event-row">
-        <td><span class="badge log info-bg">Info</span></td>
-        <td>1:12:59 pm</td>
-        <td>
-          Test Execution Started
-        </td>
-      </tr>
-      <tr class="event-row">
-        <td><span class="badge log fail-bg">Fail</span></td>
-        <td>1:13:20 pm</td>
-        <td>
-          SharesHappyJourny
-        </td>
-      </tr>
-      <tr class="event-row">
-        <td><span class="badge log info-bg">Info</span></td>
-        <td>1:13:20 pm</td>
-        <td>
-          Verify user able to Apply and complete Shares Journy for Loan.
-        </td>
-      </tr>
-      <tr class="event-row">
-        <td><span class="badge log fail-bg">Fail</span></td>
-        <td>1:13:20 pm</td>
-        <td>
-          <textarea readonly class="code-block">org.openqa.selenium.TimeoutException: Expected condition failed: waiting for element found by By.xpath: //android.widget.EditText[@hint='Enter mobile number'] to be clickable, but the element was not found: org.openqa.selenium.NoSuchElementException: An element could not be located on the page using the given search parameters..
-(tried for 20 seconds with 500 milliseconds interval)
-Build info: version: '4.45.0', revision: 'cd6a3cd cd6a3cdfca6970f62e5bc8344109d0fe0e2af05e'
-System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '21.0.11'
-Driver info: io.appium.java_client.android.AndroidDriver
-Capabilities {appium:appActivity: com.valuenable.las.MainActi..., appium:appPackage: com.valuenable.las.dev, appium:autoWebview: false, appium:automationName: UiAutomator2, appium:chromedriverAutodownload: true, appium:chromedriverExecutable: C:\Users\umesh.k\eclipse-wo..., appium:databaseEnabled: false, appium:desired: {appActivity: com.valuenable.las.MainActi..., appPackage: com.valuenable.las.dev, autoWebview: false, automationName: UiAutomator2, chromedriverAutodownload: true, chromedriverExecutable: C:\Users\umesh.k\eclipse-wo..., deviceName: Android, ensureWebviewsHavePages: true, noReset: true, platformName: ANDROID, udid: 9b010059305331323800d45b3428c0}, appium:deviceApiLevel: 35, appium:deviceManufacturer: Xiaomi, appium:deviceModel: 25028PC03I, appium:deviceName: 9b010059305331323800d45b3428c0, appium:deviceScreenDensity: 320, appium:deviceScreenSize: 720x1640, appium:deviceUDID: 9b010059305331323800d45b3428c0, appium:ensureWebviewsHavePages: true, appium:javascriptEnabled: true, appium:locationContextEnabled: false, appium:networkConnectionEnabled: true, appium:noReset: true, appium:pixelRatio: 2, appium:platformVersion: 15, appium:statBarHeight: 68, appium:takesScreenshot: true, appium:udid: 9b010059305331323800d45b3428c0, appium:viewportRect: {height: 1572, left: 0, top: 68, width: 720}, appium:warnings: {}, appium:webStorageEnabled: false, platformName: ANDROID}
-Session ID: fcfbd436-0328-49cd-9050-67faffaad398
-	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:85)
-	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:234)
-	at com.ui.utility.MobileUtility.clickOn(MobileUtility.java:152)
-	at com.ui.pages.LoginPage.enterMobileNo(LoginPage.java:45)
-	at com.ui.test.Shares.SharesHappyJourny(Shares.java:19)
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
-	at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:686)
-	at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230)
-	at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
-	at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:992)
-	at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)
-	at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)
-	at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at org.testng.TestRunner.privateRun(TestRunner.java:739)
-	at org.testng.TestRunner.run(TestRunner.java:614)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:421)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:413)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:373)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:312)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1274)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1208)
-	at org.testng.TestNG.runSuites(TestNG.java:1112)
-	at org.testng.TestNG.run(TestNG.java:1079)
-	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:308)
-	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:71)
-	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:113)
-	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
-	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
-	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
-	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
 </textarea>
           
         </td>
@@ -312,7 +193,7 @@ Session ID: fcfbd436-0328-49cd-9050-67faffaad398
 <div class="test-list">
 <div class="test-list-tools">
 <ul class="tools pull-left"><li><a href=""><span class="font-size-14">Exception</span></a></li></ul>
-<ul class="tools text-right"><li><a href="#"><span class="badge badge-primary">2</span></a></li></ul>
+<ul class="tools text-right"><li><a href="#"><span class="badge badge-primary">1</span></a></li></ul>
 </div>
 <div class="test-list-wrapper scrollable">
 <ul class="test-list-item">
@@ -321,12 +202,12 @@ Session ID: fcfbd436-0328-49cd-9050-67faffaad398
 <span class="meta">
 <span class='badge log badge-danger'>1</span>
 </span>
-<p class="name">org.openqa.selenium.TimeoutException</p>
+<p class="name">java.lang.RuntimeException</p>
 <p class="duration text-sm">1 tests</p>
 </div>
 <div class="test-contents d-none">
 <div class="info">
-<h4>org.openqa.selenium.TimeoutException</h4>
+<h4>java.lang.RuntimeException</h4>
 <span status="fail" class='badge log badge-danger'>1 failed</span>
 </div>
 <table class='table table-sm mt-4'>
@@ -340,42 +221,9 @@ Session ID: fcfbd436-0328-49cd-9050-67faffaad398
 <tbody>
 <tr class="tag-test-status" status="fail">
 <td><span class="badge log fail-bg">Fail</span></td>
-<td>13:12:59 pm</td>
+<td>15:36:28 pm</td>
 <td>
-<a href="#" class="linked" test-id='2' id='2'>SharesHappyJourny</a>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</li>
-<li class="test-item">
-<div class="test-detail">
-<span class="meta">
-<span class='badge log badge-danger'>1</span>
-</span>
-<p class="name">java.lang.AssertionError</p>
-<p class="duration text-sm">1 tests</p>
-</div>
-<div class="test-contents d-none">
-<div class="info">
-<h4>java.lang.AssertionError</h4>
-<span status="fail" class='badge log badge-danger'>1 failed</span>
-</div>
-<table class='table table-sm mt-4'>
-<thead>
-<tr>
-<th class="status-col">Status</th>
-<th class="timestamp-col">Timestamp</th>
-<th>TestName</th>
-</tr>
-</thead>
-<tbody>
-<tr class="tag-test-status" status="fail">
-<td><span class="badge log fail-bg">Fail</span></td>
-<td>13:11:11 pm</td>
-<td>
-<a href="#" class="linked" test-id='1' id='1'>MutualFoundHappyJourny</a>
+<a href="#" class="linked" test-id='1' id='1'>mutualFundHappyJourney</a>
 </td>
 </tr>
 </tbody>
@@ -395,13 +243,13 @@ Session ID: fcfbd436-0328-49cd-9050-67faffaad398
 <div class="col-md-3">
 <div class="card"><div class="card-body">
 <p class="m-b-0">Started</p>
-<h3>Jun 23, 2026 01:11:04 pm</h3>
+<h3>Jun 27, 2026 03:36:21 pm</h3>
 </div></div>
 </div>
 <div class="col-md-3">
 <div class="card"><div class="card-body">
 <p class="m-b-0">Ended</p>
-<h3>Jun 23, 2026 01:13:21 pm</h3>
+<h3>Jun 27, 2026 03:37:57 pm</h3>
 </div></div>
 </div>
 <div class="col-md-3">
@@ -413,7 +261,7 @@ Session ID: fcfbd436-0328-49cd-9050-67faffaad398
 <div class="col-md-3">
 <div class="card"><div class="card-body">
 <p class="m-b-0 text-fail">Tests Failed</p>
-<h3>2</h3>
+<h3>1</h3>
 </div></div>
 </div>
 </div>
@@ -434,7 +282,7 @@ Session ID: fcfbd436-0328-49cd-9050-67faffaad398
 </small>
 </div>
 <div>
-<small data-tooltip='100%'><b>2</b> tests failed,
+<small data-tooltip='100%'><b>1</b> tests failed,
 <b>0</b> skipped, <b data-tooltip='0%'>0</b> others
 </small>
 </div>
@@ -454,8 +302,8 @@ Session ID: fcfbd436-0328-49cd-9050-67faffaad398
 <div class="card-footer">
 <div><small data-tooltip='0%'><b>0</b> events passed</small></div>
 <div>
-<small data-tooltip='50%'><b>4</b> events failed,
-<b data-tooltip='%'>4</b> others
+<small data-tooltip='50%'><b>2</b> events failed,
+<b data-tooltip='%'>2</b> others
 </small>
 </div>
 </div>
@@ -471,7 +319,7 @@ Session ID: fcfbd436-0328-49cd-9050-67faffaad398
 </div></div>
 <script>
 var timeline = {
-"MutualFoundHappyJourny":103.176,"SharesHappyJourny":21.227
+"mutualFundHappyJourney":87.097
 };
 </script>
 <div class="row">
@@ -483,14 +331,14 @@ var timeline = {
 <tbody>
 <tr>
 <td>Platform</td>
-<td>Android </td>
+<td>Android</td>
 </tr>
 <tr>
 <td>Device</td>
 <td>POCO</td>
 </tr>
 <tr>
-<td>os</td>
+<td>OS</td>
 <td>Android 15</td>
 </tr>
 <tr>
@@ -511,7 +359,7 @@ var timeline = {
 var statusGroup = {
 parentCount: 5,
 passParent: 0,
-failParent: 2,
+failParent: 1,
 warningParent: 0,
 skipParent: 0,
 childCount: 5,
@@ -528,10 +376,10 @@ skipGrandChild: 0,
 infoGrandChild: 0,
 eventsCount: 5,
 passEvents: 0,
-failEvents: 4,
+failEvents: 2,
 warningEvents: 0,
 skipEvents: 0,
-infoEvents: 4
+infoEvents: 2
 };
 </script>        </div>
       </div>

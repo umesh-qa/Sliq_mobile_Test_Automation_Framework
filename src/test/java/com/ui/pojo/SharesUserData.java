@@ -1,5 +1,9 @@
 package com.ui.pojo;
 
+/**
+ * POJO class representing User Data specifically for Shares Loan flows.
+ * Follows standard Java naming conventions and includes a helper toString method.
+ */
 public class SharesUserData {
 
 	private String mobileNo;
@@ -7,23 +11,24 @@ public class SharesUserData {
 	private String panNo;
 	private String panName;
 	private String emailID;
-	private String DOB;
-	private String LoanAmount;
-	private String DPID;
-	private String ClientID;
-	private String SecurityName;
-	private String SharesName;
-	private String QTY;
-	private String Gender;
-	private String FatherName;
-	private String MotherName;
-	private String MaritalStatus;
-	private String AnnualIncome;
-	private String Occupation;
-	private String NatureOfBusiness;
+	private String dob;
+	private String loanAmount;
+	private String dpId;
+	private String clientId;
+	private String securityName;
+	private String sharesName;
+	private String qty;
+	private String gender;
+	private String fatherName;
+	private String motherName;
+	private String maritalStatus;
+	private String annualIncome;
+	private String occupation;
+	private String natureOfBusiness;
 
-	public SharesUserData(String mobileNo, String otp, String panNo, String panName, String emailID, String dOB,
-			String loanAmount, String dPID, String clientID, String securityName, String sharesName, String qTY,
+	// Constructor
+	public SharesUserData(String mobileNo, String otp, String panNo, String panName, String emailID, String dob,
+			String loanAmount, String dpId, String clientId, String securityName, String sharesName, String qty,
 			String gender, String fatherName, String motherName, String maritalStatus, String annualIncome,
 			String occupation, String natureOfBusiness) {
 		super();
@@ -32,20 +37,20 @@ public class SharesUserData {
 		this.panNo = panNo;
 		this.panName = panName;
 		this.emailID = emailID;
-		DOB = dOB;
-		LoanAmount = loanAmount;
-		DPID = dPID;
-		ClientID = clientID;
-		SecurityName = securityName;
-		SharesName = sharesName;
-		QTY = qTY;
-		Gender = gender;
-		FatherName = fatherName;
-		MotherName = motherName;
-		MaritalStatus = maritalStatus;
-		AnnualIncome = annualIncome;
-		Occupation = occupation;
-		NatureOfBusiness = natureOfBusiness;
+		this.dob = dob;
+		this.loanAmount = loanAmount;
+		this.dpId = dpId;
+		this.clientId = clientId;
+		this.securityName = securityName;
+		this.sharesName = sharesName;
+		this.qty = qty;
+		this.gender = gender;
+		this.fatherName = fatherName;
+		this.motherName = motherName;
+		this.maritalStatus = maritalStatus;
+		this.annualIncome = annualIncome;
+		this.occupation = occupation;
+		this.natureOfBusiness = natureOfBusiness;
 	}
 
 	public String getMobileNo() {
@@ -89,115 +94,124 @@ public class SharesUserData {
 	}
 
 	public String getDOB() {
-		return DOB;
+		return dob;
 	}
 
-	public void setDOB(String dOB) {
-		DOB = dOB;
+	public void setDOB(String dob) {
+		this.dob = dob;
 	}
 
 	public String getLoanAmount() {
-		return LoanAmount;
+		return loanAmount;
 	}
 
 	public void setLoanAmount(String loanAmount) {
-		LoanAmount = loanAmount;
+		this.loanAmount = loanAmount;
 	}
 
 	public String getDPID() {
-		return DPID;
+		return dpId;
 	}
 
-	public void setDPID(String dPID) {
-		DPID = dPID;
+	public void setDPID(String dpId) {
+		this.dpId = dpId;
 	}
 
 	public String getClientID() {
-		return ClientID;
+		return clientId;
 	}
 
-	public void setClientID(String clientID) {
-		ClientID = clientID;
+	public void setClientID(String clientId) {
+		this.clientId = clientId;
 	}
 
 	public String getSecurityName() {
-		return SecurityName;
+		return securityName;
 	}
 
 	public void setSecurityName(String securityName) {
-		SecurityName = securityName;
+		this.securityName = securityName;
 	}
 
 	public String getSharesName() {
-		return SharesName;
+		return sharesName;
 	}
 
 	public void setSharesName(String sharesName) {
-		SharesName = sharesName;
+		this.sharesName = sharesName;
 	}
 
 	public String getQTY() {
-		return QTY;
+		return qty;
 	}
 
-	public void setQTY(String qTY) {
-		QTY = qTY;
+	public void setQTY(String qty) {
+		this.qty = qty;
 	}
 
 	public String getGender() {
-		return Gender;
+		return gender;
 	}
 
 	public void setGender(String gender) {
-		Gender = gender;
+		this.gender = gender;
 	}
 
 	public String getFatherName() {
-		return FatherName;
+		return fatherName;
 	}
 
 	public void setFatherName(String fatherName) {
-		FatherName = fatherName;
+		this.fatherName = fatherName;
 	}
 
 	public String getMotherName() {
-		return MotherName;
+		return motherName;
 	}
 
 	public void setMotherName(String motherName) {
-		MotherName = motherName;
+		this.motherName = motherName;
 	}
 
 	public String getMaritalStatus() {
-		return MaritalStatus;
+		return maritalStatus;
 	}
 
 	public void setMaritalStatus(String maritalStatus) {
-		MaritalStatus = maritalStatus;
+		this.maritalStatus = maritalStatus;
 	}
 
 	public String getAnnualIncome() {
-		return AnnualIncome;
+		return annualIncome;
 	}
 
 	public void setAnnualIncome(String annualIncome) {
-		AnnualIncome = annualIncome;
+		this.annualIncome = annualIncome;
 	}
 
 	public String getOccupation() {
-		return Occupation;
+		return occupation;
 	}
 
 	public void setOccupation(String occupation) {
-		Occupation = occupation;
+		this.occupation = occupation;
 	}
 
 	public String getNatureOfBusiness() {
-		return NatureOfBusiness;
+		return natureOfBusiness;
 	}
 
 	public void setNatureOfBusiness(String natureOfBusiness) {
-		NatureOfBusiness = natureOfBusiness;
+		this.natureOfBusiness = natureOfBusiness;
 	}
 
+	@Override
+	public String toString() {
+		return "SharesUserData [mobileNo=" + mobileNo + ", otp=" + otp + ", panNo=" + panNo + ", panName=" + panName
+				+ ", emailID=" + emailID + ", dob=" + dob + ", loanAmount=" + loanAmount + ", dpId=" + dpId
+				+ ", clientId=" + clientId + ", securityName=" + securityName + ", sharesName=" + sharesName + ", qty="
+				+ qty + ", gender=" + gender + ", fatherName=" + fatherName + ", motherName=" + motherName
+				+ ", maritalStatus=" + maritalStatus + ", annualIncome=" + annualIncome + ", occupation=" + occupation
+				+ ", natureOfBusiness=" + natureOfBusiness + "]";
+	}
 }

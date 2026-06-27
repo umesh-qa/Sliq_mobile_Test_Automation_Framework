@@ -9,13 +9,17 @@ import com.ui.utility.MobileUtility;
 
 import io.appium.java_client.AppiumBy;
 
+/**
+ * Page object representing the Login Page of the application.
+ * Handles credential entry, sending OTP, validating OTP responses, and entry routing to home dashboard.
+ */
 public class LoginPage extends MobileUtility {
+
+	private final Logger logger = LoggerUtility.getLogger(this.getClass());
 
 	public LoginPage() {
 		super();
 	}
-
-	private Logger logger = LoggerUtility.getLogger(this.getClass());
 
 	private static final By NEXT_BUTTON_LOCATOR = AppiumBy.accessibilityId("Next");
 	private static final By GET_START_BUTTON_LOCATOR = AppiumBy.accessibilityId("Get Started");
@@ -27,46 +31,82 @@ public class LoginPage extends MobileUtility {
 	private static final By CONTINUE_BUTTON_LOCATOR = AppiumBy
 			.xpath("//android.widget.Button[@content-desc=\"Continue\"]");
 	
-	// login validation locator
-//	private static final By HELP_FAQ_TEXT_LOCATOR = AppiumBy
-//			.xpath("//android.view.View[@content-desc=\"Help & FAQs\"]");
-	
-	private static final By LOGIN_SUCCESS_TEXT_LOCATOR = AppiumBy.xpath("//android.view.View[@content-desc='OTP Verified Successfully!']");
+	private static final By OTP_SUCCESS_TEXT_LOCATOR = AppiumBy.xpath("//android.view.View[@content-desc='OTP Verified Successfully!']");
+	private static final By OTP_FAILED_TEXT_LOCATOR = AppiumBy.xpath("//android.view.View[@content-desc='Otp incorrect']");
 
-	public LoginPage goTologinPage() {
-		logger.info("Navigate to Login Page");
+	/**
+	 * Navigates past intro tutorial slides to the login credential form.
+	 * 
+	 * @return the active page instance
+	 */
+	public LoginPage goToLoginPage() {
+		logger.info("Navigating to Login Page via intro screens.");
 		clickOn(NEXT_BUTTON_LOCATOR);
 		clickOn(GET_START_BUTTON_LOCATOR);
 		return this;
 	}
 
+	/**
+	 * Enters the mobile number in the credential field.
+	 * 
+	 * @param number mobile number to log in with
+	 * @return the active page instance
+	 */
 	public LoginPage enterMobileNo(String number) {
 		logger.info("Entering Mobile No: " + number);
-		clickOn(MOBILE_NO_TEXT_LOCATOR);
+		clickOn(MOBILE_NO_TEXT_LOCATOR); // Kept original click-before-type sequencing for focus assurance
 		enterText(MOBILE_NO_TEXT_LOCATOR, number);
 		return this;
 	}
 
+	/**
+	 * Clicks the Send OTP button.
+	 * 
+	 * @return the active page instance
+	 */
 	public LoginPage clickOnSendOTPButton() {
-		logger.info("click on Send OTP button");
+		logger.info("Clicking on 'Send OTP' button.");
 		clickOn(SEND_OTP_BUTTON_LOCATOR);
 		return this;
 	}
 
+	/**
+	 * Enters the OTP string in the textbox.
+	 * 
+	 * @param otp the OTP code received
+	 * @return the active page instance
+	 */
 	public LoginPage enterOTP(String otp) {
-		logger.info("Entering OTP " + otp);
+		logger.info("Entering OTP code: " + otp);
 		enterText(ENTER_OTP_TEXTBOX_LOCATOR, otp);
 		return this;
 	}
 
+	/**
+	 * Submits and continues with valid credentials, verifying successful login.
+	 * 
+	 * @return new HomePage instance
+	 */
 	public HomePage clickOnContinue() {
-		logger.info("click on Continue button");
+		logger.info("Clicking on 'Continue' button.");
 		clickOn(CONTINUE_BUTTON_LOCATOR);
-		Assert.assertTrue(isElementDisplayed(LOGIN_SUCCESS_TEXT_LOCATOR),
-				"========================== LOGIN FAILED - Dashboard not visible ==========================");
-		logger.info("========================== LOGIN PASSED - Dashboard is Visible ==========================");
+		Assert.assertTrue(isElementDisplayed(OTP_SUCCESS_TEXT_LOCATOR),
+				"========================== LOGIN FAILED: Dashboard was not visible after OTP entry ==========================");
+		logger.info("========================== LOGIN PASSED: Dashboard is visible ==========================");
 		return new HomePage(getDriver());
-
 	}
 
+	/**
+	 * Submits invalid credentials and verifies that the failure alert is shown.
+	 * 
+	 * @return new HomePage instance
+	 */
+	public HomePage clickOnContinueAndGetInvalidResponse() {
+		logger.info("Clicking on 'Continue' button with invalid credentials.");
+		clickOn(CONTINUE_BUTTON_LOCATOR);
+		Assert.assertTrue(isElementDisplayed(OTP_FAILED_TEXT_LOCATOR),
+				"========================== LOGIN CHECK FAILED: System did not show validation error for invalid credentials ==========================");
+		logger.info("========================== LOGIN CHECK PASSED: Validation error shown for invalid credentials ==========================");
+		return new HomePage(getDriver());
+	}
 }

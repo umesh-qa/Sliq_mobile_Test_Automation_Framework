@@ -29,10 +29,14 @@ import org.testng.Assert;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
+import io.appium.java_client.service.local.AppiumDriverLocalService;
+import io.appium.java_client.service.local.AppiumServiceBuilder;
+import java.net.ServerSocket;
 
 public abstract class MobileUtility {
 
 	private AndroidDriver driver;
+	private static AppiumDriverLocalService appiumService;
 	protected WebDriverWait wait;
 	private Logger logger = LoggerUtility.getLogger(this.getClass());
 
@@ -129,6 +133,17 @@ public abstract class MobileUtility {
 				localRealOptions.setCapability("appium:chromedriverAutodownload", true);
 
 				caps = localRealOptions;
+			}
+
+			if (!runMode.equalsIgnoreCase("CLOUD_BROWSERSTACK") && remoteUrl != null) {
+				int port = remoteUrl.getPort() != -1 ? remoteUrl.getPort() : 4723;
+				String host = remoteUrl.getHost() != null ? remoteUrl.getHost() : "127.0.0.1";
+				if (!isServerRunning(port)) {
+					logger.info("Appium Server is not running on " + host + ":" + port + ". Starting server programmatically...");
+					startAppiumServer(host, port);
+				} else {
+					logger.info("Appium Server is already running on " + host + ":" + port + ".");
+				}
 			}
 
 			logger.info("Connecting to Appium Server at URL: " + remoteUrl);
@@ -878,6 +893,11 @@ public abstract class MobileUtility {
 			} catch (Exception adbEx) {
 				logger.warn("Could not execute keyboard reset command: " + adbEx.getMessage());
 			}
+			try {
+				stopAppiumServer();
+			} catch (Exception appiumEx) {
+				logger.warn("Could not stop programmatically started Appium Server: " + appiumEx.getMessage());
+			}
 		}
 	}
 
@@ -890,5 +910,37 @@ public abstract class MobileUtility {
 			}
 		}
 		return null;
+	}
+
+	private boolean isServerRunning(int port) {
+		boolean isServerRunning = false;
+		try (ServerSocket serverSocket = new ServerSocket(port)) {
+			isServerRunning = false;
+		} catch (IOException e) {
+			isServerRunning = true;
+		}
+		return isServerRunning;
+	}
+
+	private void startAppiumServer(String host, int port) {
+		try {
+			logger.info("Initializing programmatic Appium service on " + host + ":" + port);
+			AppiumServiceBuilder builder = new AppiumServiceBuilder();
+			builder.withIPAddress(host);
+			builder.usingPort(port);
+			builder.withArgument(() -> "--session-override");
+			appiumService = AppiumDriverLocalService.buildService(builder);
+			appiumService.start();
+			logger.info("Programmatic Appium server started successfully.");
+		} catch (Exception e) {
+			logger.error("Could not start Appium server programmatically: " + e.getMessage(), e);
+		}
+	}
+
+	private void stopAppiumServer() {
+		if (appiumService != null && appiumService.isRunning()) {
+			appiumService.stop();
+			logger.info("Programmatic Appium server stopped successfully.");
+		}
 	}
 }

@@ -11,16 +11,18 @@ import com.ui.test.smoke.BaseTest;
  */
 public class EmailValidation extends BaseTest {
 	
+	private static final String INVALID_EMAIL_ID="umeshkute";
+	
 	@Test(
-		description = "Verify error message when user enters email in invalid format.", 
+		description = "Verify error message when user enters email in invalid format in pan verification.", 
 		dataProviderClass = com.ui.dataprovider.MutualFundUserDataProvider.class, 
-		dataProvider = "MutualFundUser"
+		dataProvider = "MutualFundUser",groups = ""
 	)
 	public void checkEmailFieldValidation(MutualFundUserData data) {
 		
 		// =============== Login Page Validation =====================//
 		String actualMessage = homePage
-				.enterMobileNo("9999999965")
+				.enterMobileNo(data.getMobileNo())
 				.clickOnSendOTPButton()
 				.enterOTP(data.getOtp())
 				.clickOnContinue()
@@ -29,7 +31,7 @@ public class EmailValidation extends BaseTest {
 			    .navigateToMutualFund()
 			    .enterPanNo(data.getPanNo())
 			    .enterPanName(data.getPanName())
-			    .enterEmailId("umeshkute")
+			    .enterEmailId(INVALID_EMAIL_ID)
 			    .getInvalidEmailFormatErrorMessage();
 
 		Assert.assertEquals(actualMessage, "Enter a valid email address", 

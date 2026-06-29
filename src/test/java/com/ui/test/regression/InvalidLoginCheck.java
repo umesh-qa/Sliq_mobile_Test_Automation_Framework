@@ -8,16 +8,16 @@ import com.ui.test.smoke.BaseTest;
  */
 public class InvalidLoginCheck extends BaseTest {
 	
-	private final String mobileNo = "9999999969";
-	private final String invalidOTP = "100002";
+	private static final String MOBILE_NO = "9999999960";
+	private static final String INVALID_OTP = "100002";
 	
 	@Test(description = "Verify user is not able to login with invalid credentials.")
 	public void invalidLoginCredentialCheck() {
 		
 		homePage
-				.enterMobileNo(mobileNo)
+				.enterMobileNo(MOBILE_NO)
 				.clickOnSendOTPButton()
-				.enterOTP(invalidOTP)
+				.enterOTP(INVALID_OTP)
 				.clickOnContinueAndGetInvalidResponse();
 	}
 }

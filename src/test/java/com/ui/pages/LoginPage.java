@@ -2,6 +2,7 @@ package com.ui.pages;
 
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
 import com.ui.utility.LoggerUtility;
@@ -78,6 +79,7 @@ public class LoginPage extends MobileUtility {
 	 */
 	public LoginPage enterOTP(String otp) {
 		logger.info("Entering OTP code: " + otp);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(SEND_OTP_BUTTON_LOCATOR));
 		enterText(ENTER_OTP_TEXTBOX_LOCATOR, otp);
 		return this;
 	}

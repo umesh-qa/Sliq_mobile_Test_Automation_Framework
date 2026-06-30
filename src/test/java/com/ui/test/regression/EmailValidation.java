@@ -13,10 +13,10 @@ public class EmailValidation extends BaseTest {
 	
 	private static final String INVALID_EMAIL_ID="umeshkute";
 	
-	@Test(
+	@Test(groups = {"regression"}, 
 		description = "Verify error message when user enters email in invalid format in pan verification.", 
 		dataProviderClass = com.ui.dataprovider.MutualFundUserDataProvider.class, 
-		dataProvider = "MutualFundUser",groups = ""
+		dataProvider = "MutualFundUser"
 	)
 	public void checkEmailFieldValidation(MutualFundUserData data) {
 		

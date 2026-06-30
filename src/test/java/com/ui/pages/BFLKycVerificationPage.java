@@ -4,6 +4,7 @@ import java.util.List;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
 import com.ui.utility.LoggerUtility;
 import com.ui.utility.MobileUtility;
@@ -75,6 +76,13 @@ public class BFLKycVerificationPage extends MobileUtility {
 		logger.info("Clicking on Email verification 'Verify' button.");
 		clickOn(VERIFY_BUTTON_LOCATOR);
 		return this;
+	}
+	
+	public BFLKycVerificationPage isKYCPageDisplay() {
+		Assert.assertTrue(isElementDisplayed(VERIFY_BUTTON_LOCATOR),"==================== KYC Page not displayed after Drop ====================");
+		logger.info("==================== KYC Page displayed after Drop ====================");
+		return this;
+
 	}
 
 	/**
@@ -226,9 +234,9 @@ public class BFLKycVerificationPage extends MobileUtility {
 		scrollAndClick(nativeRadioYes);
 
 		// 2. Locate and check the 3 mandatory checkboxes natively by matching text/content-desc
-		By checkbox1 = AppiumBy.xpath("//*[contains(@text, 'I have read') or contains(@content-desc, 'I have read')]");
-		By checkbox2 = AppiumBy.xpath("//*[contains(@text, 'Politically Exposed') or contains(@content-desc, 'Politically Exposed')]");
-		By checkbox3 = AppiumBy.xpath("//*[contains(@text, 'authorize Valueable') or contains(@content-desc, 'authorize Valueable')]");
+		By checkbox1 = AppiumBy.xpath("(//android.widget.CheckBox)[1]");
+		By checkbox2 = AppiumBy.xpath("(//android.widget.CheckBox)[2]");
+		By checkbox3 = AppiumBy.xpath("(//android.widget.CheckBox)[3]");
 
 		logger.info("Scrolling and checking agreement checkboxes.");
 		scrollAndClick(checkbox1);

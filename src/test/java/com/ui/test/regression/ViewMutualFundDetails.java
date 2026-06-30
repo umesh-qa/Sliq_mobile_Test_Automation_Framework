@@ -9,7 +9,7 @@ import com.ui.test.smoke.BaseTest;
  */
 public class ViewMutualFundDetails extends BaseTest {
 
-	@Test(
+	@Test(groups = {"regression"}, 
 		description = "Verify user is able to view Mutual Fund details.",
 		dataProviderClass = com.ui.dataprovider.MutualFundUserDataProvider.class, 
 		dataProvider = "MutualFundUser"

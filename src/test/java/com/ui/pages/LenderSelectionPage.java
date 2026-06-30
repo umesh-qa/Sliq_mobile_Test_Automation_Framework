@@ -48,10 +48,23 @@ public class LenderSelectionPage extends MobileUtility {
 	private static final By PLEDGEABLE_FUNDS_CONTENT_LOCATOR = AppiumBy
 			.xpath("//android.widget.FrameLayout[@resource-id=\"android:id/content\"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View");
 		
+	// HDFC Funds Option
+	private static final By HDFC_FUNDS_OPTION_LOCATOR=AppiumBy.xpath("//android.view.View[contains(@content-desc, 'HDFC Liquid Fund-Direct Plan-Growth Option')]");
+	private static final By HDFC_FUNDS_VALUE_EDIT_BUTTON_LOCATOR=AppiumBy.xpath("//*[contains(@content-desc,'Total Unit')or contains(@text,'Total Unit')]/android.view.View[2]");
+	private static final By EDIT_FUND_VALUE=AppiumBy.xpath("//android.widget.EditText[@text='2180']");
+	private static final By PROCEED_TO_CONTINUE_EDIT_FUND_AMOUNT=AppiumBy.xpath("//android.widget.Button[@content-desc='Proceed']");
+	private static final By UPDATE_FUNDS_BUTTON_LOCATOR=AppiumBy.xpath("//android.widget.Button[@content-desc='Update Funds']");
+	private static final By LOAN_AMOUNT_AFTER_FUND_EDIT=AppiumBy.xpath("//android.view.View[@content-desc='₹ 99,754']");
+	private static final By LOAN_AMOUNT_AFTER_UNCHECK_FUNDS=AppiumBy.xpath("//android.view.View[@content-desc='₹ 90,154']");
+	private static final By HDFC_MID_CAP_FUND_CHECBOX_LOCATOR=AppiumBy.xpath("//android.view.View[contains(@content-desc,'HDFC Mid-Cap')or contains(@text,'HDFC Mid-Cap')]/android.widget.CheckBox");
+	
+	
+	//android.view.View[@content-desc="₹ 99,754"]
 	// Non-Pledgeable funds option
 	private static final By PLEDGEABLE_FUNDS_BACK_OPTION_LOCATOR = AppiumBy.xpath("//*[contains(@content-desc, 'Portfolio Breakdown') or contains(@text, 'Portfolio Breakdown')]");
 	private static final By NON_PLEDGEABLE_FUNDS_OPTION_LOCATOR = AppiumBy.xpath("//*[contains(@content-desc, 'Non Pledgeable Funds') or contains(@text, 'Non Pledgeable Funds')]");
 	
+	// 
 	/**
 	 * Navigates to and checks non-pledgeable funds content visibility.
 	 * 
@@ -95,8 +108,9 @@ public class LenderSelectionPage extends MobileUtility {
 	 */
 	public LenderSelectionPage selectBajajFinanceLender() {
 		logger.info("Selecting Bajaj Finance Ltd as the preferred lender.");
-		WebElement bajajOption = wait.until(ExpectedConditions.elementToBeClickable(BAJAJ_FINANCE_OPTION_LOCATOR));
-		bajajOption.click();
+//		WebElement bajajOption = wait.until(ExpectedConditions.elementToBeClickable(BAJAJ_FINANCE_OPTION_LOCATOR));
+//		bajajOption.click();
+		clickOn(BAJAJ_FINANCE_OPTION_LOCATOR);
 		return this;
 	}
 
@@ -109,7 +123,8 @@ public class LenderSelectionPage extends MobileUtility {
 	public LenderSelectionPage clickOnEditLoanAmount(String amount) {
 		logger.info("Editing loan amount to: " + amount);
 		clickOn(EDIT_LOAN_AMOUNT_BUTTON_LOCATOR);
-		enterTextAndPressEnter(EDIT_LOAN_AMOUNT_TEXTBOX_LOCATOR, amount);
+		enterText(EDIT_LOAN_AMOUNT_TEXTBOX_LOCATOR, amount);
+		hideKeyboard();
 		clickOn(SAVE_EDIT_LOAN_AMOUNT_BUTTON_LOCATOR);
 		logger.info("============================ LOAN AMOUNT EDITED TO: " + amount + " ============================");
 		return this;
@@ -131,5 +146,36 @@ public class LenderSelectionPage extends MobileUtility {
 		
 		logger.info("============================ LENDER SELECTED SUCCESSFULLY: KYC Verification screen is visible. ============================");
 		return new BFLKycVerificationPage(getDriver());
+	}
+	
+	
+	// just to select bajaj as lender not confirm yet.
+	public LenderSelectionPage selectBajaj() {
+		logger.info("Continuing checkout flow with Bajaj Finance...");
+		clickOn(CONTINUE_BUTTON_FOR_BAJAJ);
+		return this;
+	}
+	public LenderSelectionPage editFundsValue(String value) {
+		logger.info("Editing Fundes Value...");
+		clickOn(HDFC_FUNDS_OPTION_LOCATOR);
+		clickOn(HDFC_FUNDS_VALUE_EDIT_BUTTON_LOCATOR);
+		enterText(EDIT_FUND_VALUE, value);
+//		hideKeyboard();
+		clickOn(PROCEED_TO_CONTINUE_EDIT_FUND_AMOUNT);
+		clickOn(UPDATE_FUNDS_BUTTON_LOCATOR);
+		Assert.assertTrue(isElementDisplayed(LOAN_AMOUNT_AFTER_FUND_EDIT),"============================ EDIT FUND AMOUNT FAILED: Loan amount not update after funds value edited ============================");
+		logger.info("============================ EDIT FUND AMOUNT PASSED: Loan amount updated after funds value edited ============================");
+	
+		return this;
+	}
+	
+	public void unCheckHDFCMidCapFund() {
+		logger.info("Unchecking HDFC fund...");
+
+		clickOn(HDFC_MID_CAP_FUND_CHECBOX_LOCATOR);
+		clickOn(UPDATE_FUNDS_BUTTON_LOCATOR);
+		Assert.assertTrue(isElementDisplayed(LOAN_AMOUNT_AFTER_UNCHECK_FUNDS),"============================ UNCHECK FUNDS AMOUNT FAILED: Loan amount not update after unchecked funds Value ============================");
+		logger.info("============================ UNCHECK FUNDS AMOUNT PASSED: Loan amount update after unchecked funds Value ============================");
+
 	}
 }

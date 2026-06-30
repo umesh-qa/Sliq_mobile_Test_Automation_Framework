@@ -34,7 +34,7 @@
 					<suiteXmlFiles>
 						<suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
 					</suiteXmlFiles>
-					
+					<groups>${groups}</groups>
 				</configuration>
 			</plugin>
 		</plugins>

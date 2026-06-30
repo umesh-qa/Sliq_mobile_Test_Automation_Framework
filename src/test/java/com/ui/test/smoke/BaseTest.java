@@ -16,12 +16,12 @@ public abstract class BaseTest {
 	
 	protected LoginPage homePage;
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	public void setup() {
 		homePage = new LoginPage();
 	}
 	
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	public void quit() {
 		if (homePage != null) {
 			homePage.quitDriver();

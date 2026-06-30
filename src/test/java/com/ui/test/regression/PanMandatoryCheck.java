@@ -10,7 +10,7 @@ import com.ui.test.smoke.BaseTest;
  */
 public class PanMandatoryCheck extends BaseTest {
 
-	@Test(
+	@Test(groups = {"regression"}, 
 		description = "Verify error message when all mandatory fields are left blank by user to check loan eligibility.", 
 		dataProviderClass = com.ui.dataprovider.MutualFundUserDataProvider.class, 
 		dataProvider = "MutualFundUser"
@@ -31,7 +31,7 @@ public class PanMandatoryCheck extends BaseTest {
 			    .checkAllMandatoryMessage(); 
 	}
 	
-	@Test(
+	@Test(groups = {"regression"}, 
 		description = "Verify error message when PAN card number mandatory fields are left blank by user to check loan eligibility.", 
 		dataProviderClass = com.ui.dataprovider.MutualFundUserDataProvider.class, 
 		dataProvider = "MutualFundUser"

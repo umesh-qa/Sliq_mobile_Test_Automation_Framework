@@ -25,6 +25,9 @@ public class HomePage extends MobileUtility {
 	private static final By APPLY_NOW_BUTTON_LOCATOR = AppiumBy.accessibilityId("Apply Now");
 	private static final By MUTUAL_FUND_OPTION_LOCATOR = AppiumBy.accessibilityId("Mutual Fund");
 	private static final By CONTINUE_AND_CONFIRM_LOCATOR = AppiumBy.accessibilityId("Confirm & Continue");
+	
+	// Resume Dropped Journey
+	public static final By RESUME_JOURNEY_BUTTON_LOCATOR = AppiumBy.xpath("//android.widget.Button[@content-desc=\"Continue Application\"]");
 
 	// Navigate to Shares
 	private static final By SHARES_OPTION_LOCATOR = AppiumBy.xpath("//android.view.View[@content-desc=\"Shares\"]");
@@ -48,14 +51,14 @@ public class HomePage extends MobileUtility {
 	 */
 	public HomePage goToMutualFund() {
 		logger.info("Navigating to Mutual Fund flow (handling optional Apply overlay)...");
-		try {
-			clickOn(APPLY_NOW_BUTTON_LOCATOR);
-		} catch (Exception e) {
-			logger.warn("Apply Now overlay button did not appear, proceeding directly: " + e.getMessage());
-		} finally {
+//		try {
+//			clickOn(APPLY_NOW_BUTTON_LOCATOR);
+//		} catch (Exception e) {
+//			logger.warn("Apply Now overlay button did not appear, proceeding directly: " + e.getMessage());
+//		} finally {
 			clickOn(MUTUAL_FUND_OPTION_LOCATOR);
 			clickOn(CONTINUE_AND_CONFIRM_LOCATOR);
-		}
+//		}
 		return this;
 	}
 
@@ -69,5 +72,13 @@ public class HomePage extends MobileUtility {
 		clickOn(SHARES_OPTION_LOCATOR);
 		clickOn(CONTINUE_AND_CONFIRM_LOCATOR);
 		return new PanVerificationPage(getDriver());
+	}
+
+	/**
+	 * Clicks the dashboard's "Continue" button for a dropped journey.
+	 */
+	public void resumeDroppedJourney() {
+		logger.info("Resuming a dropped journey from the Dashboard...");
+		clickOn(RESUME_JOURNEY_BUTTON_LOCATOR);
 	}
 }

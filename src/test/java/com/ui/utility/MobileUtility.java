@@ -192,27 +192,23 @@ public abstract class MobileUtility {
 	}
 
 	public void switchToWebView() {
-
 		logger.info("Available Contexts : " + getDriver().getContextHandles());
-
+		
 		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (String context : getDriver().getContextHandles()) {
-
-			if (context.contains("WEBVIEW")) {
-
-				getDriver().context(context);
-
-				logger.info("Switched To : " + getDriver().getContext());
-
-				return;
+			WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(20));
+			wait.until(d -> ((AndroidDriver) getDriver()).getContextHandles().stream()
+					.anyMatch(context -> context.contains("WEBVIEW")));
+					
+			for (String context : getDriver().getContextHandles()) {
+				if (context.contains("WEBVIEW")) {
+					getDriver().context(context);
+					logger.info("Switched To : " + getDriver().getContext());
+					return;
+				}
 			}
+		} catch (Exception e) {
+			logger.warn("Timeout waiting for WEBVIEW context.");
 		}
-
 		throw new RuntimeException("No WEBVIEW Context Found. Available Contexts : " + getDriver().getContextHandles());
 	}
 
@@ -278,12 +274,17 @@ public abstract class MobileUtility {
 		element.sendKeys(value);
 
 		try {
-			logger.info("Pressing native Enter key.");
-			driver.pressKey(new io.appium.java_client.android.nativekey.KeyEvent(
-					io.appium.java_client.android.nativekey.AndroidKey.ENTER));
-		} catch (Exception e) {
-			logger.warn("Could not natively press Enter: " + e.getMessage());
+			logger.info("Pressing Enter key via sendKeys.");
 			element.sendKeys(Keys.ENTER);
+		} catch (Exception e) {
+			logger.warn("Could not press Enter via sendKeys: " + e.getMessage());
+			try {
+				logger.info("Fallback: Pressing native Enter key.");
+				driver.pressKey(new io.appium.java_client.android.nativekey.KeyEvent(
+						io.appium.java_client.android.nativekey.AndroidKey.ENTER));
+			} catch (Exception ex) {
+				logger.warn("Could not natively press Enter: " + ex.getMessage());
+			}
 		}
 	}
 
@@ -344,7 +345,7 @@ public abstract class MobileUtility {
 				org.openqa.selenium.interactions.Sequence scroll = new org.openqa.selenium.interactions.Sequence(finger, 1);
 				scroll.addAction(finger.createPointerMove(Duration.ZERO, org.openqa.selenium.interactions.PointerInput.Origin.viewport(), startX, startY));
 				scroll.addAction(finger.createPointerDown(org.openqa.selenium.interactions.PointerInput.MouseButton.LEFT.asArg()));
-				scroll.addAction(finger.createPointerMove(Duration.ofMillis(600), org.openqa.selenium.interactions.PointerInput.Origin.viewport(), endX, endY));
+				scroll.addAction(finger.createPointerMove(Duration.ofMillis(200), org.openqa.selenium.interactions.PointerInput.Origin.viewport(), endX, endY));
 				scroll.addAction(finger.createPointerUp(org.openqa.selenium.interactions.PointerInput.MouseButton.LEFT.asArg()));
 				driver.perform(List.of(scroll));
 			} catch (Exception e) {
@@ -352,21 +353,38 @@ public abstract class MobileUtility {
 			}
 			maxScroll--;
 			try {
-				Thread.sleep(500); // Allow UI to settle
+				Thread.sleep(200); // Allow UI to settle
 			} catch (InterruptedException ignored) {}
 		}
 
-		if (!isElementDisplayedQuick(locator)) {
+		if (isElementDisplayedQuick(locator)) {
+			// Nudge scroll to bring element fully into view (so it's not cut off at the bottom)
+			try {
+				org.openqa.selenium.interactions.PointerInput finger = new org.openqa.selenium.interactions.PointerInput(org.openqa.selenium.interactions.PointerInput.Kind.TOUCH, "finger");
+				org.openqa.selenium.interactions.Sequence scroll = new org.openqa.selenium.interactions.Sequence(finger, 1);
+				scroll.addAction(finger.createPointerMove(Duration.ZERO, org.openqa.selenium.interactions.PointerInput.Origin.viewport(), startX, (int)(height * 0.6)));
+				scroll.addAction(finger.createPointerDown(org.openqa.selenium.interactions.PointerInput.MouseButton.LEFT.asArg()));
+				scroll.addAction(finger.createPointerMove(Duration.ofMillis(200), org.openqa.selenium.interactions.PointerInput.Origin.viewport(), startX, (int)(height * 0.4)));
+				scroll.addAction(finger.createPointerUp(org.openqa.selenium.interactions.PointerInput.MouseButton.LEFT.asArg()));
+				driver.perform(List.of(scroll));
+				Thread.sleep(500);
+			} catch (Exception ignored) {}
+		} else {
 			logger.warn("Element " + locator + " is still not visible after scrolling.");
 		}
 	}
 
 	private boolean isElementDisplayedQuick(By locator) {
 		try {
+			// Temporarily override implicit wait to 0 to prevent this check from taking a long time during scroll loops
+			driver.manage().timeouts().implicitlyWait(Duration.ZERO);
 			List<WebElement> elements = driver.findElements(locator);
 			return !elements.isEmpty() && elements.get(0).isDisplayed();
 		} catch (Exception e) {
 			return false;
+		} finally {
+			// Restore a standard implicit wait if one was set (assuming 0 by default for Appium scripts)
+			// (If the framework uses global implicit wait, it should be restored here)
 		}
 	}
 
@@ -420,6 +438,18 @@ public abstract class MobileUtility {
 
 	
 
+	public void clearText(By locator) {
+		logger.info("Clearing text");
+		wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).clear();
+	}
+	
+	public void closeAndOpenApp() {
+		logger.info("Terminating and activating the application...");
+		driver.terminateApp("com.valuenable.las.dev");
+		driver.activateApp("com.valuenable.las.dev");
+		
+	}
+
 	public String getElementVisibleText(By locator) {
 		WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 		String text = element.getText();
@@ -457,14 +487,7 @@ public abstract class MobileUtility {
 	}
 
 	public void switchToNative() {
-
-		try {
-			Thread.sleep(4000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		getDriver().context("NATIVE_APP");
-
 		System.out.println("Current Context : " + getDriver().getContext());
 	}
 	
@@ -552,9 +575,15 @@ public abstract class MobileUtility {
 					if (isElementDisplayedQuick(locator)) {
 						logger.info("Found link element: " + linkName + ". Validating by clicking...");
 						clickOn(locator);
-						Thread.sleep(4000); // Allow page/browser to open and switch context if any
+						// Check if a WebView context becomes available dynamically
+						WebDriverWait contextWait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+						try {
+							contextWait.until(d -> ((AndroidDriver) getDriver()).getContextHandles().stream()
+									.anyMatch(c -> c.contains("WEBVIEW")));
+						} catch (Exception ignored) {
+							// If no webview after 10s, proceed
+						}
 						
-						// Check if a WebView context becomes available
 						Set<String> contexts = getDriver().getContextHandles();
 						logger.info("Available contexts after clicking " + linkName + ": " + contexts);
 						
@@ -596,7 +625,6 @@ public abstract class MobileUtility {
 						
 						// Navigate back to return to the app screen
 						getDriver().navigate().back();
-						Thread.sleep(2000); // Allow native app to load
 					}
 				} catch (Exception e) {
 					logger.error("Failed to validate link " + linkName + ": " + e.getMessage());

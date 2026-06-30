@@ -10,7 +10,7 @@ import com.ui.test.smoke.BaseTest;
  */
 public class LinkValidation extends BaseTest {
 
-	@Test(
+	@Test(groups = {"regression"}, 
 		description = "Verify T&C and Privacy Policy hyperlinks are linked and working.", 
 		dataProviderClass = com.ui.dataprovider.MutualFundUserDataProvider.class, 
 		dataProvider = "MutualFundUser"

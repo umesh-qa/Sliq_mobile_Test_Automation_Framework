@@ -11,7 +11,7 @@ import com.ui.test.smoke.BaseTest;
  */
 public class PanValidation extends BaseTest {
 	
-	@Test(
+	@Test(groups = {"regression"}, 
 		description = "Verify error message when user enters PAN in invalid format.", 
 		dataProviderClass = com.ui.dataprovider.MutualFundUserDataProvider.class, 
 		dataProvider = "MutualFundUser"

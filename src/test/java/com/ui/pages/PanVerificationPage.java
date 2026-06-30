@@ -103,7 +103,7 @@ public class PanVerificationPage extends MobileUtility {
 	public PanVerificationPage acceptTermsAndConditions() {
 		logger.info("Accepting terms and conditions (scrolling to click).");
 		scrollAndClick(TERMS1_CHECKBOX_LOCATOR);
-		scrollAndClick(TERMS2_CHECKBOX_LOCATOR);
+		clickOn(TERMS2_CHECKBOX_LOCATOR);
 		return this;
 	}
 
@@ -126,7 +126,6 @@ public class PanVerificationPage extends MobileUtility {
 				"============================ PAN VALIDATION FAILED: Mutual Fund Central Page is not visible ============================");
 
 		logger.info("============================ PAN VALIDATION PASSED: Mutual Fund Central Page is visible ============================");
-		switchToWebView();
 		return new MutualFundCentralPage(getDriver());
 	}
 

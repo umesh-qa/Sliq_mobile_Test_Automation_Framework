@@ -21,6 +21,9 @@ public class LoginPage extends MobileUtility {
 	public LoginPage() {
 		super();
 	}
+	public LoginPage(io.appium.java_client.android.AndroidDriver driver) {
+		super(driver);
+	}
 
 	private static final By NEXT_BUTTON_LOCATOR = AppiumBy.accessibilityId("Next");
 	private static final By GET_START_BUTTON_LOCATOR = AppiumBy.accessibilityId("Get Started");

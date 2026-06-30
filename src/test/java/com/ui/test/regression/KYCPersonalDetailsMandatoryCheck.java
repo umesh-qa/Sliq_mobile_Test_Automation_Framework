@@ -10,7 +10,7 @@ import com.ui.test.smoke.BaseTest;
  */
 public class KYCPersonalDetailsMandatoryCheck extends BaseTest {
 
-	@Test(
+	@Test(groups = {"regression"}, 
 		description = "Verify user is not able to proceed further if all mandatory information is missing in Personal and Financial Details for KYC Verification.", 
 		dataProviderClass = com.ui.dataprovider.MutualFundUserDataProvider.class, 
 		dataProvider = "MutualFundUser"
@@ -52,7 +52,7 @@ public class KYCPersonalDetailsMandatoryCheck extends BaseTest {
 			  .checkKYCMandatoryMessage();
 	}
 	
-	@Test(
+	@Test(groups = {"regression"}, 
 		description = "Verify user is not able to proceed further if mandatory information is missing in Personal Details for KYC Verification.", 
 		dataProviderClass = com.ui.dataprovider.MutualFundUserDataProvider.class, 
 		dataProvider = "MutualFundUser"
@@ -94,7 +94,7 @@ public class KYCPersonalDetailsMandatoryCheck extends BaseTest {
 			  .checkKYCMandatoryMessage();
 	}
 	
-	@Test(
+	@Test(groups = {"regression"}, 
 		description = "Verify user is not able to proceed further if mandatory information is missing in financial Details for KYC Verification.", 
 		dataProviderClass = com.ui.dataprovider.MutualFundUserDataProvider.class, 
 		dataProvider = "MutualFundUser"

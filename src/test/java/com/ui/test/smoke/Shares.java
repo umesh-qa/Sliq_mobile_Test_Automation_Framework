@@ -8,10 +8,11 @@ import com.ui.pojo.SharesUserData;
  */
 public class Shares extends BaseTest {
 
-	@Test(
+	@Test(groups = {"smoke"}, 
 		description = "Verify user is able to apply and complete Shares Journey for Loan.", 
 		dataProviderClass = com.ui.dataprovider.SharesUserDataProvider.class, 
-		dataProvider = "SharesUser"
+		dataProvider = "SharesUser",
+		retryAnalyzer = com.ui.listeners.MyRetryAnalyzer.class
 	)
 	public void sharesHappyJourney(SharesUserData data) {
 

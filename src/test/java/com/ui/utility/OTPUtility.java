@@ -47,15 +47,26 @@ public class OTPUtility {
 			List<WebElement> textViews = driver.findElements(AppiumBy.className("android.widget.TextView"));
 
 			for (WebElement element : textViews) {
-				String text = element.getText();
-				if (text != null && text.contains("OTP")) {
-					Matcher matcher = pattern.matcher(text);
-					if (matcher.find()) {
-						String otp = matcher.group();
-						logger.info("Successfully intercepted OTP code: " + otp);
-						driver.navigate().back();
-						return otp;
+				try {
+					String text = element.getText();
+					if (text != null && text.contains("OTP")) {
+						Matcher matcher = pattern.matcher(text);
+						if (matcher.find()) {
+							String otp = matcher.group();
+							logger.info("Successfully intercepted OTP code: " + otp);
+							try {
+								driver.executeScript("mobile: clearNotifications");
+								logger.info("Cleared all notifications.");
+							} catch (Exception ex) {
+								logger.warn("Could not clear notifications: " + ex.getMessage());
+							}
+							driver.navigate().back();
+							return otp;
+						}
 					}
+				} catch (org.openqa.selenium.StaleElementReferenceException e) {
+					// Ignore elements that disappear during the scan
+					continue;
 				}
 			}
 

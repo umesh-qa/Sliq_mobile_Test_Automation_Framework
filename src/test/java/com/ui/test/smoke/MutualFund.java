@@ -10,10 +10,11 @@ import com.ui.pojo.MutualFundUserData;
  */
 public class MutualFund extends BaseTest {
 
-	@Test(
+	@Test(groups = {"smoke"}, 
 		description = "Verify user is able to apply and complete Mutual Fund Journey for Loan.", 
 		dataProviderClass = com.ui.dataprovider.MutualFundUserDataProvider.class, 
-		dataProvider = "MutualFundUser"
+		dataProvider = "MutualFundUser",
+		retryAnalyzer = com.ui.listeners.MyRetryAnalyzer.class
 	)
 	public void mutualFundHappyJourney(MutualFundUserData data) {
 

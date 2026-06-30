@@ -11,7 +11,7 @@ public class InvalidLoginCheck extends BaseTest {
 	private static final String MOBILE_NO = "9999999960";
 	private static final String INVALID_OTP = "100002";
 	
-	@Test(description = "Verify user is not able to login with invalid credentials.")
+	@Test(groups = {"regression"}, description = "Verify user is not able to login with invalid credentials.")
 	public void invalidLoginCredentialCheck() {
 		
 		homePage

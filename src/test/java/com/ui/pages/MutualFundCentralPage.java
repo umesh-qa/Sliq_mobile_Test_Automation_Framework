@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import com.ui.utility.LoggerUtility;
 import com.ui.utility.MobileUtility;
@@ -27,8 +28,8 @@ public class MutualFundCentralPage extends MobileUtility {
 
 	private static final By SELECT_ALL_FUNDS = AppiumBy.xpath(
 			"//android.widget.TextView[@text='Select All Eligible AMCs']/preceding-sibling::android.widget.CheckBox");
-	private static final By AUTHENTICATION_BUTTON_LOCATOR = By
-			.xpath("//button[contains(text(),'Authenticate with OTP')]");
+
+	private static final By AUTHENTICATION_BUTTON_LOCATOR = AppiumBy.xpath("//*[contains(@text,'Authenticate with OTP') or contains(@content-desc,'Authenticate with OTP')]");
 	private static final By CONTINUE_TO_PORTFOLIO_IMPORT_LOCATOR = By
 			.xpath("//android.widget.Button[@text='Continue to Portfolio Import']");
 	private static final By SEE_LOAN_OFFER_BUTTON_LOCATOR = AppiumBy.accessibilityId("See Loan Offers");
@@ -41,15 +42,14 @@ public class MutualFundCentralPage extends MobileUtility {
 	 */
 	public MutualFundCentralPage enterOtp(String otp) {
 		logger.info("Entering OTP for portfolio authentication...");
-		wait = new WebDriverWait(getDriver(), Duration.ofSeconds(20));
-		wait.until(d -> d.findElements(By.tagName("input")).size() >= 6);
-
-		List<WebElement> otpBoxes = getDriver().findElements(By.tagName("input"));
-		logger.info("Total OTP input boxes detected: " + otpBoxes.size());
-
-		for (int i = 0; i < Math.min(otp.length(), otpBoxes.size()); i++) {
-			otpBoxes.get(i).sendKeys(String.valueOf(otp.charAt(i)));
+		for (int i = 0; i < otp.length() && i < 6; i++) {
+			By otpBoxLocator = AppiumBy.xpath("//android.view.View[@resource-id=\"root\"]/android.widget.EditText[" + (i + 1) + "]");
+			WebElement element = getElementToBeClickable(otpBoxLocator);
+			element.click();
+			element.sendKeys(String.valueOf(otp.charAt(i)));
+			try { Thread.sleep(500); } catch (InterruptedException ignored) {}
 		}
+		hideKeyboard();
 		return this;
 	}
 
@@ -71,7 +71,6 @@ public class MutualFundCentralPage extends MobileUtility {
 	 */
 	public MutualFundCentralPage selectAllFunds() {
 		logger.info("Selecting all eligible AMCs/Funds.");
-		switchToNative();
 		WebElement checkbox = getElementToBeClickable(SELECT_ALL_FUNDS);
 		checkbox.click();
 		return this;
@@ -99,5 +98,11 @@ public class MutualFundCentralPage extends MobileUtility {
 		WebElement seeLoanOffer = getElementToBeClickable(SEE_LOAN_OFFER_BUTTON_LOCATOR);
 		seeLoanOffer.click();
 		return new LenderSelectionPage(getDriver());
+	}
+	
+	public MutualFundCentralPage isSeeLoanOfferDisplay() {
+		Assert.assertTrue(isElementDisplayed(SEE_LOAN_OFFER_BUTTON_LOCATOR),"======================== Loan offer button is not displayed ========================");
+		logger.info("======================== Loan offer button is displayed ========================");
+	    return this;
 	}
 }
